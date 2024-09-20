@@ -5,21 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddUserRequest {
-
+public class AddRoleToUserRequest {
     @NotBlank
     private String username;
-
-    @NotBlank
-    private String email;
-
-    @NotBlank(message = "Password must not be empty")
-    private String password;
 
     @NotBlank
     private String roleName;

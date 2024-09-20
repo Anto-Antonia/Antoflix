@@ -9,7 +9,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponse {
+public class SignInResponse {
+
     private String username;
     private String email;
     private List<String> roleName;
