@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class WatchlistResponse {
     private String name;
-     private List<MovieResponse> movies;
+    private List<MovieResponse> movies;
 }

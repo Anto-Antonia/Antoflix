@@ -15,6 +15,5 @@ public class MovieResponse {
     private String title;
     private String description;
     private LocalDate localDate;
-
     private List<GenreResponse> genres;
 }

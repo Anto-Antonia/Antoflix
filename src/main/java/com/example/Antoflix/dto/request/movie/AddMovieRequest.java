@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class AddMovieRequest {
     private String title;
-    private String genre;
     private String description;
     private LocalDate releaseDate;
     private List<Integer> genreId;
