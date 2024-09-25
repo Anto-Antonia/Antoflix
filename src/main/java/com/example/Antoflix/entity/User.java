@@ -38,4 +38,9 @@ public class User {
                 inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> favoriteMovie = new ArrayList<>();
 
+    public void addRole(Role role){
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
+
 }

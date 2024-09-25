@@ -18,8 +18,5 @@ public interface UserRoleService {
     void deleteRole(Integer id);
     List<UserResponse> getAllUsers();
     public RoleResponse getRole(Integer id);
-    public UserResponse getUser(Integer id);
-
-
-
+    public UserResponse getUserById(Integer id);
 }

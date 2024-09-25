@@ -2,6 +2,8 @@ package com.example.Antoflix.mapper;
 
 import com.example.Antoflix.dto.request.role.AddRoleRequest;
 import com.example.Antoflix.dto.request.user.AddUserRequest;
+import com.example.Antoflix.dto.response.role.RoleResponse;
+import com.example.Antoflix.dto.response.user.SignInResponse;
 import com.example.Antoflix.dto.response.user.UserResponse;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
@@ -47,6 +49,13 @@ public class UserRoleMapper {
         return userResponse;
     }
 
+    public RoleResponse fromRoleResponse(Role role){
+        RoleResponse roleResponse = new RoleResponse();
 
+        roleResponse.setName(role.getRoleName());
+        return roleResponse;
+    }
+
+   // public static SignInResponse fromUserDetailImpl(UserDetailImpl userDetailImpl){}
 
 }

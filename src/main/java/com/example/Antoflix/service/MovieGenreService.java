@@ -16,4 +16,5 @@ public interface MovieGenreService {
     public MovieResponse removeGenreFromMovie(Integer id);
     public void deleteMovie(Integer id);
     public void deleteGenre(Integer id);
+    public List<MovieResponse> getAllMovies();
 }
