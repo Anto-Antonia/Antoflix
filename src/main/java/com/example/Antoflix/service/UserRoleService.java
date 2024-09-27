@@ -3,6 +3,7 @@ package com.example.Antoflix.service;
 import com.example.Antoflix.dto.request.role.AddRoleRequest;
 import com.example.Antoflix.dto.request.user.AddRoleToUserRequest;
 import com.example.Antoflix.dto.request.user.AddUserRequest;
+import com.example.Antoflix.dto.request.user.UpdateUserRequest;
 import com.example.Antoflix.dto.response.role.RoleResponse;
 import com.example.Antoflix.dto.response.user.UserResponse;
 import com.example.Antoflix.entity.Role;
@@ -19,4 +20,5 @@ public interface UserRoleService {
     List<UserResponse> getAllUsers();
     public RoleResponse getRole(Integer id);
     public UserResponse getUserById(Integer id);
+    public void updateUser(Integer id, UpdateUserRequest updateUserRequest);
 }
