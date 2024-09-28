@@ -5,11 +5,13 @@ import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
 import com.example.Antoflix.entity.Watchlist;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class WatchlistMapper {
     @Autowired
     private MovieGenreMapper movieGenreMapper;

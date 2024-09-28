@@ -10,13 +10,12 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Integer>{
-
-    @Query("select m from Movie m where lower(e.title) like lower(concat('%', :keyword, '%'))")
+    @Query("select m from Movie m where lower(m.title) like lower(concat('%', :keyword, '%'))")
     List<Movie> findByTitleContainingKeyword(@Param("keyword") String keyword);
 
-    @Query("select m from Movie m where lower(e.title) like lower(concat('%', :title, '%'))")
-    List<Movie> findByTitleIgnoreCare(@Param("title")String title);
+    @Query("select m from Movie m where lower(m.title) like lower(concat('%', :title, '%'))")
+    List<Movie> findByTitleIgnoreCase(@Param("title")String title);
 
-    @Query("select m from Movie m where lower(e.title) like lower(concat('%', :genre, '%'))")
+    @Query("select m from Movie m where lower(m.genres) like lower(concat('%', :genre, '%'))")
     List<Movie> findByGenre(@Param("genre")String genre);
 }

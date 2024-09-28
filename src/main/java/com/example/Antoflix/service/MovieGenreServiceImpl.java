@@ -12,11 +12,12 @@ import com.example.Antoflix.exceptions.movie.AddMovieException;
 import com.example.Antoflix.mapper.MovieGenreMapper;
 import com.example.Antoflix.repository.GenreRepository;
 import com.example.Antoflix.repository.MovieRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Service
 public class MovieGenreServiceImpl implements MovieGenreService {
 
     private final MovieRepository movieRepository;
@@ -67,6 +68,7 @@ public class MovieGenreServiceImpl implements MovieGenreService {
 
     @Override
     public MovieResponse removeGenreFromMovie(Integer movieId, Integer genreId) {
+
        Movie movie = movieRepository.findById(movieId).orElseThrow(()-> new AddMovieException("Movie not found"));
        Genre genre =  genreRepository.findById(genreId).orElseThrow(()-> new AddGenreException("Genre not found"));
 
@@ -87,19 +89,24 @@ public class MovieGenreServiceImpl implements MovieGenreService {
 
             movieRepository.save(movieToUpdate);
         } else{
-            throw new AddMovieException("The movie with id " + id + "does not exist");
+            throw new AddMovieException("The movie with id " + id + " does not exist");
         }
     }
 
-
     @Override
     public void deleteMovie(Integer id) {
+        if(!movieRepository.existsById(id)){
+            throw new AddMovieException("Movie with id " + id + " does not exist");
+        }
         movieRepository.deleteById(id);
 
     }
 
     @Override
     public void deleteGenre(Integer id) {
+        if(!genreRepository.existsById(id)){
+            throw new AddGenreException("Genre with id " + id + " does not exist");
+        }
         genreRepository.deleteById(id);
     }
 

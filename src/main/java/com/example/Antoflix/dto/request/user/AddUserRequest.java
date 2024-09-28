@@ -24,5 +24,5 @@ public class AddUserRequest {
     private String password;
 
     @NotEmpty
-    private List<String> roleName;
+    private String roleName;
 }

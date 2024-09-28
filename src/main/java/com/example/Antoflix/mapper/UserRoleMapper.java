@@ -7,6 +7,9 @@ import com.example.Antoflix.dto.response.user.SignInResponse;
 import com.example.Antoflix.dto.response.user.UserResponse;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
+import com.example.Antoflix.service.security.UserDetailsImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,18 +18,21 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserRoleMapper {
-    public User fromAddUserRequest(AddUserRequest addUserRequest) {
+
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public static User fromAddUserRequest(AddUserRequest addUserRequest) {
         User user = new User();
 
         user.setUsername(addUserRequest.getUsername());
         user.setEmail(addUserRequest.getEmail());
-        user.setPassword(addUserRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(addUserRequest.getPassword()));
         user.setRoles(new ArrayList<>());
 
         return user;
     }
 
-    public Role fromAddRoleRequest(AddRoleRequest addRoleRequest) {
+    public static Role fromAddRoleRequest(AddRoleRequest addRoleRequest) {
         Role role = new Role();
 
         role.setRoleName(addRoleRequest.getName());
@@ -35,7 +41,7 @@ public class UserRoleMapper {
         return role;
     }
 
-    public UserResponse fromUserResponse(User user) {
+    public static UserResponse fromUserResponse(User user) {
         UserResponse userResponse = new UserResponse();
 
         userResponse.setUsername(user.getUsername());
@@ -49,13 +55,22 @@ public class UserRoleMapper {
         return userResponse;
     }
 
-    public RoleResponse fromRoleResponse(Role role){
+    public static RoleResponse fromRoleResponse(Role role){
         RoleResponse roleResponse = new RoleResponse();
 
         roleResponse.setName(role.getRoleName());
         return roleResponse;
     }
 
-   // public static SignInResponse fromUserDetailImpl(UserDetailImpl userDetailImpl){}
+   public static SignInResponse fromUserDetailImpl(UserDetailsImpl userDetailsImpl){
+        SignInResponse signInResponse = new SignInResponse();
+
+        signInResponse.setUsername(userDetailsImpl.getUsername());
+        signInResponse.setEmail(userDetailsImpl.getEmail());
+        List<String> roles = userDetailsImpl.getAuthorities().stream().map(a-> a.getAuthority()).toList();
+        signInResponse.setRoleName(roles);
+
+        return signInResponse;
+   }
 
 }

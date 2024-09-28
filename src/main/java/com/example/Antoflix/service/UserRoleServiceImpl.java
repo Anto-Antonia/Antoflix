@@ -43,7 +43,7 @@ public class UserRoleServiceImpl implements UserRoleService{
         String roleName = addRoleToUserRequest.getRoleName();
 
         Optional<User> userOptional = userRepository.findUserByUsername(userName);
-        Optional<Role> roleOptional = roleRepository.findRoleByName(roleName);
+        Optional<Role> roleOptional = roleRepository.findRoleByRoleName(roleName);
 
         if(userOptional.isPresent() && roleOptional.isPresent()){
             User user = userOptional.get();
@@ -58,7 +58,7 @@ public class UserRoleServiceImpl implements UserRoleService{
     public User addUser(AddUserRequest addUserRequest) {
         User user = userRoleMapper.fromAddUserRequest(addUserRequest);
 
-        List<String> userRole = addUserRequest.getRoleName();
+        String userRole = addUserRequest.getRoleName();
         List<Role> roles = roleRepository.findAll().stream().filter(element -> userRole.contains(element.getRoleName()))
                 .collect(Collectors.toList());
 
