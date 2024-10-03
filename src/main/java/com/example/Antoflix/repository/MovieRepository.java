@@ -16,6 +16,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer>{
     @Query("select m from Movie m where lower(m.title) like lower(concat('%', :title, '%'))")
     List<Movie> findByTitleIgnoreCase(@Param("title")String title);
 
-    @Query("select m from Movie m where lower(m.genres) like lower(concat('%', :genre, '%'))")
+    @Query("select m from Movie m join m.genres g where lower(g.genreName) like lower(concat('%', :genre, '%'))")
     List<Movie> findByGenre(@Param("genre")String genre);
 }
