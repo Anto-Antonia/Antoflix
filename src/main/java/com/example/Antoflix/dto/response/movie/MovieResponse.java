@@ -14,6 +14,6 @@ import java.util.List;
 public class MovieResponse {
     private String title;
     private String description;
-    private LocalDate localDate;
+    private String localDate;
     private List<GenreResponse> genres;
 }

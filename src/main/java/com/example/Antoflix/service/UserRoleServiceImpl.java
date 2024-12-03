@@ -9,6 +9,7 @@ import com.example.Antoflix.dto.response.user.UserResponse;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
 import com.example.Antoflix.exceptions.role.RoleNotFoundException;
+import com.example.Antoflix.exceptions.user.UserAlreadyTakenException;
 import com.example.Antoflix.exceptions.user.UserNotFoundException;
 import com.example.Antoflix.mapper.UserRoleMapper;
 import com.example.Antoflix.repository.RoleRepository;
@@ -38,33 +39,62 @@ public class UserRoleServiceImpl implements UserRoleService{
     }
 
     @Override
-    public void addRoleToUser(AddRoleToUserRequest addRoleToUserRequest) {
-        String userName = addRoleToUserRequest.getUsername();
-        String roleName = addRoleToUserRequest.getRoleName();
+    public void addRoleToUser(Integer userId, String roleName) {
+//        String userName = addRoleToUserRequest.getUsername();
+//        String roleName = addRoleToUserRequest.getRoleName();
+//
+//        Optional<User> userOptional = userRepository.findUserByUsername(userName);
+//        Optional<Role> roleOptional = roleRepository.findRoleByRoleName(roleName);
+//
+//        if(userOptional.isPresent() && roleOptional.isPresent()){
+//            User user = userOptional.get();
+//            Role role = roleOptional.get();
+//
+//            user.addRole(role);
+//            userRepository.save(user);
+//        }
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with id: " + userId + " not found"));
+        Role role = roleRepository.findRoleByRoleName(roleName)
+                .orElseThrow(() -> new IllegalArgumentException("Role with name: " + roleName + " not found"));
 
-        Optional<User> userOptional = userRepository.findUserByUsername(userName);
-        Optional<Role> roleOptional = roleRepository.findRoleByRoleName(roleName);
+        user.getRoles().clear(); // clearing the old role, making space for the new one
+        user.addRole(role);
 
-        if(userOptional.isPresent() && roleOptional.isPresent()){
-            User user = userOptional.get();
-            Role role = roleOptional.get();
-
-            user.addRole(role);
-            userRepository.save(user);
-        }
+        userRepository.save(user);
     }
 
     @Override
-    public User addUser(AddUserRequest addUserRequest) {
-        User user = userRoleMapper.fromAddUserRequest(addUserRequest);
+    public UserResponse addUser(AddUserRequest addUserRequest) {
+        Optional<User> existingUser = userRepository.findUserByEmail(addUserRequest.getEmail());
+        if(existingUser.isPresent()){
+            throw new UserAlreadyTakenException("Email or username is already in use: " + addUserRequest.getEmail());
+        }
 
-        String userRole = addUserRequest.getRoleName();
-        List<Role> roles = roleRepository.findAll().stream().filter(element -> userRole.contains(element.getRoleName()))
-                .collect(Collectors.toList());
+       // User user = userRoleMapper.fromAddUserRequest(addUserRequest);
+        User user = new User();
+        user.setUsername(addUserRequest.getUsername());
+        user.setEmail(addUserRequest.getEmail());
+        user.setPassword(addUserRequest.getPassword());
 
-        user.setRoles(roles);
+        Role role = roleRepository.findRoleByRoleName("user")
+                .orElseThrow(()-> new RoleNotFoundException("Role 'user' not found in the DB"));
 
-        return userRepository.save(user);
+        user.addRole(role);
+
+        userRepository.save(user);
+
+        return new UserResponse(
+                user.getUsername(),
+                user.getEmail(),
+                user.getRoles().stream().map(Role:: getRoleName).collect(Collectors.toList())
+        );
+
+//        String userRole = addUserRequest.getRoleName();
+//        List<Role> roles = roleRepository.findAll().stream().filter(element -> userRole.contains(element.getRoleName()))
+//                .collect(Collectors.toList());
+//        user.setRoles(roles);
+//        return userRepository.save(user);
     }
 
     @Override

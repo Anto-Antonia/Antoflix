@@ -1,7 +1,9 @@
 package com.example.Antoflix.service.security;
 
 import com.example.Antoflix.dto.request.user.AddUserRequest;
+import com.example.Antoflix.dto.request.user.RegisterRequest;
 import com.example.Antoflix.dto.request.user.SignInRequest;
+import com.example.Antoflix.dto.response.user.RegisterResponse;
 import com.example.Antoflix.dto.response.user.SignInResponse;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
@@ -14,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,6 +27,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public AuthService(UserRepository userRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
@@ -38,18 +43,31 @@ public class AuthService {
         }
     }
 
-    public void registerUser(AddUserRequest addUserRequest){
-        getUserByEmail(addUserRequest.getEmail());
+    public RegisterResponse registerUser(RegisterRequest registerRequest){
+        getUserByEmail(registerRequest.getEmail());
 
-        User user = UserRoleMapper.fromAddUserRequest(addUserRequest);
-        Optional<Role> optionalRole = roleRepository.findRoleByRoleName(addUserRequest.getRoleName());
+        User user = new User();
+        user.setUsername(registerRequest.getUsername());
+        user.setEmail(registerRequest.getEmail());
 
-        if(optionalRole.isPresent()){
-            user.addRole(optionalRole.get());
-        }else{
-            throw  new RoleNotFoundException("Role with name " + addUserRequest.getRoleName() + " is not in the database");
-        }
+        String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
+        user.setPassword(encodedPassword);
+
+        Role defaultRole = roleRepository.findRoleByRoleName("user")
+                .orElseThrow(() -> new RoleNotFoundException("Default role 'user' not found"));
+
+        user.addRole(defaultRole);
+//        if(optionalRole.isPresent()){
+//            user.addRole(optionalRole.get());
+//        }else{
+//            throw  new RoleNotFoundException("Role with name " + addUserRequest.getRoleName() + " is not in the database");
+//        }
         userRepository.save(user);
+         return new RegisterResponse(
+                 user.getUsername(),
+                 user.getEmail(),
+                 "User registered successfully!"
+         );
     }
 
     public SignInResponse signIn(SignInRequest signInRequest){

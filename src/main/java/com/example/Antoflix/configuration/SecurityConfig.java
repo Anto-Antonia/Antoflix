@@ -29,11 +29,17 @@ public class SecurityConfig {
         http.csrf().disable();
         http.authorizeHttpRequests(auth -> {
             auth
-                    .requestMatchers("/api/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
+                    .requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
                     .requestMatchers("/api/register").permitAll() // pentru a inregistra un user cu un anumit rol(in practica doar un utilizator simplu ar trebui sa se poata inregistra cu rol de user)
-                    .requestMatchers("/api/signin").permitAll() // pentru a loga un utilizator
-                    .requestMatchers(HttpMethod.GET, "/api/products").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
-                    .requestMatchers(HttpMethod.POST, "/api/product").hasAuthority("admin") //endpoint protejat(doar un admin il poate accesa)
+                    .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
+                    .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
+                    .requestMatchers(HttpMethod.POST, "/api/v1/movies/movie").hasAuthority("admin")//endpoint protejat(doar un admin il poate accesa)
+                    .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.POST, "/api/v1/movies/genre").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.PATCH, "/api/v1/movies/genre/{id}").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/{id}").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/genre/{id}").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/movies/genres").hasAuthority("admin")
                     .anyRequest().authenticated();
         }).httpBasic(Customizer.withDefaults());
 

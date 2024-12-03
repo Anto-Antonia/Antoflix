@@ -10,12 +10,13 @@ import com.example.Antoflix.service.UserRoleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("/api/v1/users")
 public class UserRoleController {
     private final UserRoleService userRoleService;
 
@@ -30,15 +31,17 @@ public class UserRoleController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<Void> addUser(@RequestBody AddUserRequest addUserRequest){
-        userRoleService.addUser(addUserRequest);
-        return ResponseEntity.ok().build();
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<UserResponse> addUser(@RequestBody AddUserRequest addUserRequest){
+        UserResponse response = userRoleService.addUser(addUserRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PostMapping("/addRoleToUser")
-    public ResponseEntity<Void> addRoleToUser(@RequestBody @Valid AddRoleToUserRequest addRoleToUserRequest){
-        userRoleService.addRoleToUser(addRoleToUserRequest);
-        return ResponseEntity.ok().build();
+    @PatchMapping("/user/addRoleToUser")
+    @PreAuthorize("hasRole('admin')")
+    public ResponseEntity<String> addRoleToUser(@RequestBody @Valid AddRoleToUserRequest addRoleToUserRequest){
+        userRoleService.addRoleToUser(addRoleToUserRequest.getUserId(), addRoleToUserRequest.getRoleName());
+        return ResponseEntity.ok("Role added successfully to the user with the ID: " + addRoleToUserRequest.getUserId());
     }
 
     @DeleteMapping("role/{id}")

@@ -12,7 +12,9 @@ import com.example.Antoflix.exceptions.movie.AddMovieException;
 import com.example.Antoflix.mapper.MovieGenreMapper;
 import com.example.Antoflix.repository.GenreRepository;
 import com.example.Antoflix.repository.MovieRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,10 +104,14 @@ public class MovieGenreServiceImpl implements MovieGenreService {
 
     }
 
+    @Transactional
     @Override
     public void deleteGenre(Integer id) {
-        if(!genreRepository.existsById(id)){
-            throw new AddGenreException("Genre with id " + id + " does not exist");
+        Genre genre = genreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id " + id + " not found"));
+        for (Movie movie : genre.getMovies()){
+            movie.getGenres().remove(genre);
+            movieRepository.save(movie);
         }
         genreRepository.deleteById(id);
     }

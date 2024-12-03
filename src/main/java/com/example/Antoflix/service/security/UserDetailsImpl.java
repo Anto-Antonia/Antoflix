@@ -2,11 +2,11 @@ package com.example.Antoflix.service.security;
 
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
-import com.example.Antoflix.repository.UserRepository;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 
 import java.util.Collection;
 import java.util.List;

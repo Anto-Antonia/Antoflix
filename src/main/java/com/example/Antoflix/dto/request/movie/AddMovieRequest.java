@@ -13,6 +13,6 @@ import java.util.List;
 public class AddMovieRequest {
     private String title;
     private String description;
-    private LocalDate releaseDate;
+    private String releaseDate;
     private List<Integer> genreId;
 }

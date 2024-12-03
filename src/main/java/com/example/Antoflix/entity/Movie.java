@@ -18,8 +18,8 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    private LocalDate releaseDate;
-    private String genre;
+    private String releaseDate;
+    //private String genre;
     private String description;
 
     @ManyToMany(mappedBy = "favoriteMovie")
@@ -28,7 +28,7 @@ public class Movie {
     @ManyToMany(mappedBy = "movies")
     private List<Watchlist> includedInWatchlist = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "movie_genre",
                 joinColumns = @JoinColumn(name = "movie_id"),
                 inverseJoinColumns = @JoinColumn(name = "genre_id"))
