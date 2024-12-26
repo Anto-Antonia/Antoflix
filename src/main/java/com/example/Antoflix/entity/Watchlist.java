@@ -22,7 +22,7 @@ public class Watchlist {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY) //added fetchType lazy
     @JoinTable(name = "watchlist_movies",
                 joinColumns = {@JoinColumn(name = "watchlist_id")},
                 inverseJoinColumns = {@JoinColumn(name = "movie_id")})

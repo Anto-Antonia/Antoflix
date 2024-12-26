@@ -16,4 +16,7 @@ public class MovieResponse {
     private String description;
     private String localDate;
     private List<GenreResponse> genres;
+
+//    public MovieResponse(Integer id, String title, String description) {
+//    }
 }

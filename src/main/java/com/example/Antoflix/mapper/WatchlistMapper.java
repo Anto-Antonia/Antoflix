@@ -3,6 +3,8 @@ package com.example.Antoflix.mapper;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
+import com.example.Antoflix.entity.Movie;
+import com.example.Antoflix.entity.User;
 import com.example.Antoflix.entity.Watchlist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,10 +18,10 @@ public class WatchlistMapper {
     @Autowired
     private MovieGenreMapper movieGenreMapper;
 
-    public Watchlist addWatchlistRequest(AddWatchlistRequest addWatchlistRequest){
+    public Watchlist createWatchlistRequest(AddWatchlistRequest addWatchlistRequest, List<Movie> movies){// instead of addWatchlist now it's createWatchlist
         Watchlist watchlist = new Watchlist();
         watchlist.setName(addWatchlistRequest.getName());
-        watchlist.setMovies(new ArrayList<>());
+        watchlist.setMovies(movies);
 
         return watchlist;
     }
@@ -35,5 +37,6 @@ public class WatchlistMapper {
         watchlistResponse.setMovies(movies);
 
         return watchlistResponse;
+
     }
 }

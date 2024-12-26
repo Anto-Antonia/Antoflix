@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface UserRoleService {
     public Role addRole(AddRoleRequest addRoleRequest);
-    public void addRoleToUser(Integer userId, String roleName); // changed from addRoleToUser  to integer and String for logic
+    public void addRoleToUser(Integer userId, String roleName); // changed from addRoleToUser to integer and String for logic
     public UserResponse addUser(AddUserRequest addUserRequest);
     void deleteUser(Integer id);
     void deleteRole(Integer id);

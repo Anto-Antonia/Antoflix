@@ -26,7 +26,7 @@ public class Movie {
     private List<User> favoritedByUsed = new ArrayList<>();
 
     @ManyToMany(mappedBy = "movies")
-    private List<Watchlist> includedInWatchlist = new ArrayList<>();
+    private List<Watchlist> watchlists = new ArrayList<>(); // changed the name from includedInWatchlist to watchlists
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "movie_genre",

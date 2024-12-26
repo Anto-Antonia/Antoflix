@@ -5,7 +5,6 @@ import com.example.Antoflix.dto.request.movie.AddMovieRequest;
 import com.example.Antoflix.dto.request.movie.UpdateMovieRequest;
 import com.example.Antoflix.dto.response.genre.GenreResponse;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
-import com.example.Antoflix.entity.Genre;
 import com.example.Antoflix.service.MovieGenreService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -40,6 +40,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/{id}").hasAuthority("admin")
                     .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/genre/{id}").hasAuthority("admin")
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies/genres").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/watchlist/**").hasAuthority("user")
                     .anyRequest().authenticated();
         }).httpBasic(Customizer.withDefaults());
 
