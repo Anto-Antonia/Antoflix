@@ -34,6 +34,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
                     .requestMatchers(HttpMethod.POST, "/api/v1/movies/movie").hasAuthority("admin")//endpoint protejat(doar un admin il poate accesa)
+                    .requestMatchers(HttpMethod.GET, "/api/v1/users/{userId}/favorites").hasAuthority("user")
                     .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("admin")
                     .requestMatchers(HttpMethod.POST, "/api/v1/movies/genre").hasAuthority("admin")
                     .requestMatchers(HttpMethod.PATCH, "/api/v1/movies/genre/{id}").hasAuthority("admin")

@@ -1,20 +1,25 @@
 package com.example.Antoflix.service;
 
 import com.example.Antoflix.dto.request.role.AddRoleRequest;
-import com.example.Antoflix.dto.request.user.AddRoleToUserRequest;
 import com.example.Antoflix.dto.request.user.AddUserRequest;
 import com.example.Antoflix.dto.request.user.UpdateUserRequest;
+import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.role.RoleResponse;
 import com.example.Antoflix.dto.response.user.UserResponse;
+import com.example.Antoflix.entity.Movie;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
 import com.example.Antoflix.exceptions.role.RoleNotFoundException;
 import com.example.Antoflix.exceptions.user.UserAlreadyTakenException;
 import com.example.Antoflix.exceptions.user.UserNotFoundException;
+import com.example.Antoflix.mapper.MovieGenreMapper;
 import com.example.Antoflix.mapper.UserRoleMapper;
+import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.RoleRepository;
 import com.example.Antoflix.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +30,15 @@ public class UserRoleServiceImpl implements UserRoleService{
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserRoleMapper userRoleMapper;
+    private final MovieRepository movieRepository; // added movieRepo for the relationship between user and movie
+    private final MovieGenreMapper movieGenreMapper;
 
-    public UserRoleServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserRoleMapper userRoleMapper) {
+    public UserRoleServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserRoleMapper userRoleMapper, MovieRepository movieRepository, MovieGenreMapper movieGenreMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userRoleMapper = userRoleMapper;
+        this.movieRepository = movieRepository;
+        this.movieGenreMapper = movieGenreMapper;
     }
 
     @Override
@@ -154,5 +163,38 @@ public class UserRoleServiceImpl implements UserRoleService{
         } else {
             throw new UserNotFoundException("The user with id " + id + "does not exist");
         }
+    }
+
+    //added logic for adding and removing a movie to a favourite list
+    @Override
+    public void addMovieToFavourites(Integer userId, Integer movieId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User not found"));
+        Movie movie = movieRepository.findById(movieId).orElseThrow(()->new EntityNotFoundException("Movie not found"));
+
+        if(!user.getFavoriteMovie().contains(movie)){
+            user.getFavoriteMovie().add(movie);
+            userRepository.save(user);
+        }
+    }
+
+    @Transactional
+    @Override
+    public void removeMovieFromFavourites(Integer userId, Integer movieId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User not found"));
+        Movie movie = movieRepository.findById(movieId).orElseThrow(()->new EntityNotFoundException("Movie not found"));
+
+        if(user.getFavoriteMovie().contains(movie)){
+            user.getFavoriteMovie().remove(movie);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public List<MovieResponse> getFavouriteMovies(Integer userId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User not found"));
+
+        return user.getFavoriteMovie().stream()
+                .map(movieGenreMapper::fromMovieResponse)
+                .collect(Collectors.toList());
     }
 }

@@ -4,6 +4,7 @@ import com.example.Antoflix.dto.request.role.AddRoleRequest;
 import com.example.Antoflix.dto.request.user.AddRoleToUserRequest;
 import com.example.Antoflix.dto.request.user.AddUserRequest;
 import com.example.Antoflix.dto.request.user.UpdateUserRequest;
+import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.role.RoleResponse;
 import com.example.Antoflix.dto.response.user.UserResponse;
 import com.example.Antoflix.service.UserRoleService;
@@ -78,5 +79,23 @@ public class UserRoleController {
     public ResponseEntity<UserResponse> updateUser(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest updateUserRequest){
         userRoleService.updateUser(id, updateUserRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/{userId}/favorites/{movieId}")
+    public ResponseEntity<String> addToFavorites (@PathVariable Integer userId, @PathVariable Integer movieId){
+        userRoleService.addMovieToFavourites(userId, movieId);
+        return ResponseEntity.ok("Movie added to favorites");
+    }
+
+    @DeleteMapping("/{userId}/favorites/{movieId}")
+    public ResponseEntity<String> removeFromFavorites(@PathVariable Integer userId, @PathVariable Integer movieId){
+        userRoleService.removeMovieFromFavourites(userId, movieId);
+        return ResponseEntity.ok("Movie removed from favorites");
+    }
+
+    @GetMapping("/{userId}/favorites")
+    public ResponseEntity<List<MovieResponse>> getFavoriteMovies(@PathVariable Integer userId){
+        List<MovieResponse> responses = userRoleService.getFavouriteMovies(userId);
+        return ResponseEntity.ok(responses);
     }
 }
