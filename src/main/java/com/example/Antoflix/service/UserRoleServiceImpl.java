@@ -2,6 +2,7 @@ package com.example.Antoflix.service;
 
 import com.example.Antoflix.dto.request.role.AddRoleRequest;
 import com.example.Antoflix.dto.request.user.AddUserRequest;
+import com.example.Antoflix.dto.request.user.UpdateUserPasswordRequest;
 import com.example.Antoflix.dto.request.user.UpdateUserRequest;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.role.RoleResponse;
@@ -18,6 +19,7 @@ import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.RoleRepository;
 import com.example.Antoflix.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -164,6 +166,8 @@ public class UserRoleServiceImpl implements UserRoleService{
             throw new UserNotFoundException("The user with id " + id + "does not exist");
         }
     }
+
+
 
     //added logic for adding and removing a movie to a favourite list
     @Override

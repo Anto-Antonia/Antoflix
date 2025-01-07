@@ -170,6 +170,7 @@ public class MovieGenreServiceTest {
     @Test
     public void updateMovie_whenSuccessful_updateMovie(){
         int movieId = 1;
+
         UpdateMovieRequest updateMovieRequest = new UpdateMovieRequest();
         updateMovieRequest.setTitle("New movie title");
         updateMovieRequest.setDescription("New description if needed");

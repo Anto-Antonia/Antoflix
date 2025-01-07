@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserRoleMapper {
+public class UserRoleMapper {                                                           // removed "static" from most methods, they interfered with test cases
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public static User fromAddUserRequest(AddUserRequest addUserRequest) {
+    public User fromAddUserRequest(AddUserRequest addUserRequest) {
         User user = new User();
 
         user.setUsername(addUserRequest.getUsername());
@@ -31,7 +31,7 @@ public class UserRoleMapper {
         return user;
     }
 
-    public static Role fromAddRoleRequest(AddRoleRequest addRoleRequest) {
+    public Role fromAddRoleRequest(AddRoleRequest addRoleRequest) {
         Role role = new Role();
 
         role.setRoleName(addRoleRequest.getName());
@@ -40,7 +40,7 @@ public class UserRoleMapper {
         return role;
     }
 
-    public static UserResponse fromUserResponse(User user) {
+    public UserResponse fromUserResponse(User user) {
         UserResponse userResponse = new UserResponse();
 
         userResponse.setUsername(user.getUsername());
@@ -54,7 +54,7 @@ public class UserRoleMapper {
         return userResponse;
     }
 
-    public static RoleResponse fromRoleResponse(Role role){
+    public RoleResponse fromRoleResponse(Role role){
         RoleResponse roleResponse = new RoleResponse();
 
         roleResponse.setName(role.getRoleName());
