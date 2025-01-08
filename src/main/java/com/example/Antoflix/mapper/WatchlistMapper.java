@@ -37,6 +37,5 @@ public class WatchlistMapper {
         watchlistResponse.setMovies(movies);
 
         return watchlistResponse;
-
     }
 }

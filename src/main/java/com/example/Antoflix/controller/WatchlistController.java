@@ -43,7 +43,7 @@ public class WatchlistController {
 
     @GetMapping("/{watchlistId}")
     public ResponseEntity<WatchlistResponse> getWatchlistById (@PathVariable Integer watchlistId){
-        watchlistService.getWatchlistById(watchlistId);
-        return ResponseEntity.ok().build();
+       WatchlistResponse watchlistResponse = watchlistService.getWatchlistById(watchlistId);
+        return ResponseEntity.ok(watchlistResponse);
     }
 }
