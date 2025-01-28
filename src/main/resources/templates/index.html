@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Antoflix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Thymeleaf link for CSS -->
+    <link rel="stylesheet" th:href="@{/css/style-index.css}">
+
+    <!-- Favicons -->
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon-16x16.png}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/apple-touch-icon.png}">
+    <link rel="manifest" th:href="@{/images/site.webmanifest}">
+
+</head>
+<body>
+<header class="header">
+    <div class="site-logo">
+        Anto<span class="flix">flix</span>
+    </div>
+
+    <!-- Thymeleaf link for SignIn page -->
+    <nav>
+        <button class="button"> <a th:href="@{/signIn}">Sign in</a></button>
+    </nav>
+</header>
+
+<!-- Background -->
+<div class="background">
+    <img th:src="@{/images/homepage-image.png}" alt="Background Image">
+</div>
+
+<!-- Foreground -->
+<div class="container">
+    <div class="homepage-image">
+        <img th:src="@{/images/homepage-image.png}" alt="Logo" class="logo">
+
+        <div class="homepage-text">
+            <h1><strong>Countless <span style="color: crimson;">movies</span>, create <span style="color: crimson;">watchlists</span> and <span style="color: crimson;">much more!</span></strong></h1>
+            <p>Watch anywhere, anytime for FREE!</p>
+            <button class="register-button"> <a th:href="@{/register}">Get started</a></button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

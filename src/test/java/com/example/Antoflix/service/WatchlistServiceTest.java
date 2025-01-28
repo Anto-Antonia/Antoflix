@@ -1,4 +1,4 @@
-package com.example.Antoflix.servie;
+package com.example.Antoflix.service;
 
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
@@ -10,7 +10,6 @@ import com.example.Antoflix.mapper.WatchlistMapper;
 import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.UserRepository;
 import com.example.Antoflix.repository.WatchlistRepository;
-import com.example.Antoflix.service.WatchlistServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
