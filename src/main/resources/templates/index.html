@@ -23,7 +23,7 @@
 
     <!-- Thymeleaf link for SignIn page -->
     <nav>
-        <button class="button"> <a th:href="@{/signIn}">Sign in</a></button>
+        <a th:href="@{/signIn}"><button class="button">Sign in</button></a>
     </nav>
 </header>
 
@@ -39,8 +39,8 @@
 
         <div class="homepage-text">
             <h1><strong>Countless <span style="color: crimson;">movies</span>, create <span style="color: crimson;">watchlists</span> and <span style="color: crimson;">much more!</span></strong></h1>
-            <p>Watch anywhere, anytime for FREE!</p>
-            <button class="register-button"> <a th:href="@{/register}">Get started</a></button>
+            <p>Watch anywhere, anytime for FREE!
+                <a th:href="@{/register}"><button class="register-button"> Get started</button></a></p>
         </div>
     </div>
 </div>

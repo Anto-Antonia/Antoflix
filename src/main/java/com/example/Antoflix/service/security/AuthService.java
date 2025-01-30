@@ -13,6 +13,7 @@ import com.example.Antoflix.mapper.UserRoleMapper;
 import com.example.Antoflix.repository.RoleRepository;
 import com.example.Antoflix.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -71,16 +72,19 @@ public class AuthService {
     }
 
     public SignInResponse signIn(SignInRequest signInRequest){
-        String email = signInRequest.getEmail();
-        String password = signInRequest.getPassword();
+        try {
+            String email = signInRequest.getEmail();
+            String password = signInRequest.getPassword();
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        return UserRoleMapper.fromUserDetailImpl(userDetails);
-
+            return UserRoleMapper.fromUserDetailImpl(userDetails);
+        }catch(Exception e){
+            throw new BadCredentialsException("Invalid email or password");
+        }
     }
 }

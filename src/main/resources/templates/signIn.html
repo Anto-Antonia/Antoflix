@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign In to Antoflix</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <!--Link for css-->
+    <link rel = "stylesheet" th:href = "@{/css/signIn-style.css}">
+
+        <!--Favicons-->
+    <link rel="icon" th:href="@{/images/favicon_ico}" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicon-32x32.png}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon-16x16.png}">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/apple-touch-icon.png}">
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/android-chrome-192x192.png}">
+    <link rel="icon" type="image/png" sizes="512x512" th:href="@{/images/android-chrome-512x512.png}">
+    <link rel="manifest" th:href="@{/images/site.webmanifest}">
+
+    <script defer th:src="@{/js/signIn-script.js}"></script>
+</head>
+<body>
+<header class = "header">
+    <div class = "logo">
+        <a th:href="@{/}"><img th:src="@{/images/Antoflix-logo.2.png}" class = "small-logo" alt = "Logo"></a>
+    </div>
+
+    <div class = "text-container">
+        <h1 class = "title"> Sign In to Anto<span class = "flix">flix</span></h1>
+
+    </div>
+
+</header>
+
+<div class = "form-box">
+    <form class = "form" th:action="@{/signIn}" th:object="${signInRequest}" method="post">
+
+        <span class = "title-signIn"> Sign In </span>
+        <span class = "subtitle"> Enter your Antoflix email adress and password to continue.</span>
+
+        <div class = "form-container">
+
+            <input type="email" name="email" class="input" placeholder="Enter your email" required>
+
+            <div class = "password-container">
+                <input type="password" name="password" class="input" placeholder="Password" id="password" required>
+                <span class = "toggle-password">
+                    <i class = "fa-solid fa-eye" id="togglePassword"></i>
+                </span>
+            </div>
+
+        </div>
+        <button> Sign In </button>
+
+    </form>
+</div>
+
+</body>
+</html>
