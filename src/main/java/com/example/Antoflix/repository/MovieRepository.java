@@ -18,4 +18,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer>{
 
     @Query("select m from Movie m join m.genres g where lower(g.genreName) like lower(concat('%', :genre, '%'))")
     List<Movie> findByGenre(@Param("genre")String genre);
+
+    List<Movie> findAllByOrderByTitleAsc(); // method to return movies alphabetically
 }

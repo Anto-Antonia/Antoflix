@@ -76,6 +76,12 @@ public class MovieGenreController {
         return ResponseEntity.status(HttpStatus.OK).body(movieResponseList);
     }
 
+    @GetMapping("/asc")
+    public ResponseEntity<List<MovieResponse>> getAllMoviesAsc(){
+        List<MovieResponse> movieResponses = movieGenreService.getAllMoviesAsc();
+        return ResponseEntity.status(HttpStatus.OK).body(movieResponses);
+    }
+
     @GetMapping("/genres")
     public ResponseEntity<List<GenreResponse>> getAllGenres(){
         List<GenreResponse> genreResponseList = movieGenreService.getAllGenres();

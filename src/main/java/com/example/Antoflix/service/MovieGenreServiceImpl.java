@@ -125,6 +125,16 @@ public class MovieGenreServiceImpl implements MovieGenreService {
         return movieResponses;
     }
 
+    // added method to return movies alphabetically
+    @Override
+    public List<MovieResponse> getAllMoviesAsc() {
+        List<Movie> movies = movieRepository.findAllByOrderByTitleAsc();
+        List<MovieResponse> movieResponses = movies.stream()
+                .map(element -> movieGenreMapper.fromMovieResponse(element)).collect(Collectors.toList());
+
+        return movieResponses;
+    }
+
     @Override
     public List<GenreResponse> getAllGenres() {
         List<Genre> genres = genreRepository.findAll();
