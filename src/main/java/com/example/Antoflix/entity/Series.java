@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,24 +12,25 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movie {
+public class Series {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String title;
-    private String releaseDate;
     private String description;
+    private String releaseYear;
 
-    @ManyToMany(mappedBy = "favoriteMovie")
-    private List<User> favoritedByUsed = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "movies")
-    private List<Watchlist> watchlists = new ArrayList<>(); // changed the name from includedInWatchlist to watchlists
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "movie_genre",
-                joinColumns = @JoinColumn(name = "movie_id"),
+    @ManyToMany
+    @JoinTable(name = "series_genre",
+                joinColumns = {
+                    @JoinColumn(name = "series_id"),
+                    @JoinColumn(name = "series_title", referencedColumnName = "title"),
+                },
                 inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres = new ArrayList<>();
+
+    @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)
+    private List<Season> seasons = new ArrayList<>();
 }
