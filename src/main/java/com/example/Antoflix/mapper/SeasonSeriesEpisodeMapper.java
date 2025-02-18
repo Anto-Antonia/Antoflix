@@ -3,6 +3,7 @@ package com.example.Antoflix.mapper;
 import com.example.Antoflix.dto.request.episode.AddEpisodeRequest;
 import com.example.Antoflix.dto.request.season.AddSeasonRequest;
 import com.example.Antoflix.dto.request.series.AddSeriesRequest;
+import com.example.Antoflix.dto.response.episode.EpisodeResponse;
 import com.example.Antoflix.dto.response.genre.GenreResponse;
 import com.example.Antoflix.dto.response.season.SeasonResponse;
 import com.example.Antoflix.dto.response.series.SeriesResponse;
@@ -77,7 +78,23 @@ public class SeasonSeriesEpisodeMapper {
 
         Episode episode = new Episode();
         episode.setTitle(addEpisodeRequest.getTitle());
+        episode.setDescription(addEpisodeRequest.getDescription());
+        episode.setDuration(addEpisodeRequest.getDuration());
+        episode.setEpisodeNr(addEpisodeRequest.getEpisodeNr());
+        episode.setSeason(season);
 
+        return episode;
+    }
+
+    public EpisodeResponse fromEpisodeResponse(Episode episode){
+        EpisodeResponse episodeResponse = new EpisodeResponse();
+        episodeResponse.setTitle(episode.getTitle());
+        episodeResponse.setDescription(episode.getDescription());
+        episodeResponse.setDuration(episode.getDuration());
+        episodeResponse.setEpisodeNr(episode.getEpisodeNr());
+        episodeResponse.setSeasonNr(episode.getSeason().getSeasonNr());
+
+        return episodeResponse;
     }
 
     public GenreResponse fromGenreResponse(Genre genre){
