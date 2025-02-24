@@ -2,27 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Register to Antoflix</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!--Link for css-->
     <link rel = "stylesheet" th:href = "@{/css/signIn-style.css}">
 
     <!--Favicons-->
     <link rel="icon" th:href="@{/images/favicon_ico}" type="image/x-icon">
+
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/images/favicon-32x32.png}">
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon-16x16.png}">
+
     <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/apple-touch-icon.png}">
+
     <link rel="icon" type="image/png" sizes="192x192" th:href="@{/images/android-chrome-192x192.png}">
     <link rel="icon" type="image/png" sizes="512x512" th:href="@{/images/android-chrome-512x512.png}">
+
     <link rel="manifest" th:href="@{/images/site.webmanifest}">
 
     <script defer th:src="@{/js/register-script.js}"></script>
 </head>
 <body>
-<header class = "header">
+    <header class = "header">
         <h1> Register to&nbsp;<span style ="color: black"> Anto</span><span style="color: red">flix</span></h1>
 
-</header>
+    </header>
 
 <div class = "form-box">
     <form class = "form" th:action="@{/register}" th:object="${RegisterRequest}" method="post">
@@ -37,10 +41,14 @@
 
         <div class = "form-container">
 
-            <input type ="text" name="text" class = "input" placeholder = "Username" required>
-            <input type="email" name="email" class="input" placeholder="Enter your email" required>
+            <label for="username">Username</label>
+            <input type ="text" name="text" class = "input" placeholder = "Username" id="username" required>
+
+            <label for="email">Email</label>
+            <input type="email" name="email" class="input" placeholder="Enter your email" id="email" required>
 
             <div class = "password-container">
+                <label for="password">Password</label>
                 <input type="password" name="password" class="input" placeholder="Password" id="password" required>
                 <span class = "toggle-password">
                     <i class = "fa-solid fa-eye" id="togglePassword"></i>

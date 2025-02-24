@@ -1,10 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dashboard</title>
+    <title>Home - Antoflix</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel = "stylesheet" th:href="@{/css/dashboard-style.css}">
+
+    <!-- Default favicon-->
+    <link rel="icon" type="image/x-icon" th:href = "@{images/favicon_ico}">
+
+    <!--Png icons for dif resolutions-->
+    <link rel="icon" type="image/png" sizes="32x32" th:href = "@{images/favicon-32x32.png}">
+    <link rel="icon" type="image/png" size="16x16" th:href = "@{images/favicon-16x16.png}">
+
+    <!-- Apple touch Icon-->
+    <link rel="apple-touch-icon" sizes="180x180" th:href = "@{images/apple-touch-icon.png}">
+
+    <!-- Android Chrome Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" th:href = "@{images/android-chrome-192x192.png}">
+    <link rel="icon" type="image/png" sizes="512x512" th:href = "@{images/android-chrome-512x512.png}">
+
+    <!-- Manifest file -->
+    <link rel="manifest" th:href = "@{images/site.webmanifest}">
+
+    <script th:src = "@{/js/dashboard-script.js}" defer></script>
 </head>
 <body>
-<h1>Welcome to Antoflix Dashboard</h1>
-<a href="/logout">Logout</a>
+<header class = "header">
+    <div class = "logo">
+        <h2> Anto<span class = "flix">flix</span></h2>
+    </div>
+    <div class = "main-nav">
+        <ul class = "main-header">
+            <li id="menu-item-1" class="menu-item-1">
+                <a th:href="@{/movies/}"><strong>Movies</strong></a>
+            </li>
+
+            <li id="menu-item-2" class="menu-item-2">
+                <a th:href="@{/series/}"><strong>Series</strong></a>
+            </li>
+
+            <div class = "dropdown">
+                <li id="menu-item-3" class="menu-item-3">
+                    <a th:href="@{/genres/}"><strong>Genres</strong><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class = "dropdown-menu">
+                        <li><a th:href="@{/genres/action}">Action</a></li>
+                        <li><a th:href="@{/genres/fantasy}">Fantasy</a></li>
+                        <li><a th:href="@{/genres/horror}">Horror</a></li>
+                        <li><a th:href="@{/genres/comedy}">Comedy</a></li>
+                        <li><a th:href="@{/genres/musical}">Musical</a></li>
+                        <li><a th:href="@{/genres/drama}">Drama</a></li>
+                        <li><a th:href="@{/genres/adventure}">Adventure</a></li>
+                        <li><a th:href="@{/genres/sf}">SF</a></li>
+                        <li><a th:href="@{/genres/kids}">Kids</a></li>
+                        <li><a th:href="@{/genres/superhero}">Superhero</a></li>
+                        <li><a th:href="@{/genres/animation}">Animation</a></li>
+                        <li><a th:href="@{/genres/anime}">Anime</a></li>
+                        <li><a th:href="@{/genres/zombie horror}">Zombie Horror</a></li>
+                    </ul>
+                </li>
+            </div>
+
+            <li id="menu-item-4" class="menu-item-4">
+                <a th:href="@{/a-z/}"><strong>A-Z</strong></a>
+            </li>
+
+            <li id="menu-item-5" class="menu-item-5">
+                <a th:href="@{/new-release/}"><strong>New Added</strong></a>
+            </li>
+
+            <li id="menu-item-6" class="menu-item-6">
+                <a th:href="@{/watchlist}"><strong>My Watchlist</strong></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class = "profile">
+        <div class="profile-icon" id="profileIcon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div class="profile-dropdown" id="profileDropdown">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+
+<div class="homepage-box">
+
+</div>
+
+
 </body>
 </html>

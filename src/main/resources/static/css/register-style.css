@@ -139,7 +139,7 @@ header h1{
 .toggle-password{
     position: absolute;
     right: 10px;
-    top: 50%;
+    top: 60%;
     transform: translateY(-80%);
     cursor: pointer;
     font-size: 20px;
@@ -148,4 +148,9 @@ header h1{
 
 .toggle-password:hover {
     color: black;
+}
+
+label{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
 }

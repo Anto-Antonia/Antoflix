@@ -39,16 +39,22 @@
 
         <div class = "form-container">
 
-            <input type="email" name="email" class="input" placeholder="Enter your email" required>
+            <label for="email">Email</label>
+            <input type="email" name="email" class="input" placeholder="Enter your email" id="email" required>
 
             <div class = "password-container">
+                <label for="password">Password</label>
                 <input type="password" name="password" class="input" placeholder="Password" id="password" required>
                 <span class = "toggle-password">
                     <i class = "fa-solid fa-eye" id="togglePassword"></i>
                 </span>
             </div>
-
         </div>
+
+        <div th:if="${param.error}">
+            <p style="color:red;">Invalid email or password. Please try again.</p> <!-- error message for when a user enters wrong credentials-->
+        </div>
+
         <button> Sign In </button>
 
     </form>

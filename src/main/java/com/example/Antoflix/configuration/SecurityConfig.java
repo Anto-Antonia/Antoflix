@@ -27,8 +27,8 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.authorizeHttpRequests(auth -> {
-            auth
+        http.authorizeHttpRequests(auth -> auth     // removed auth -> { auth
+
                     .requestMatchers("/", "/homepage").permitAll()
                     .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
                     .requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
@@ -48,17 +48,24 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api.v1/series").hasAuthority("user")
                     .requestMatchers(HttpMethod.GET, "/api.v1/series/seasons").hasAuthority("user")
                     .requestMatchers(HttpMethod.GET, "/api.v1/series/episodes").hasAuthority("user")
-                    .anyRequest().authenticated();
+                    .anyRequest().authenticated()//;
+                )
+                .formLogin(login -> login
+                        .loginPage("/signIn")  // Thymeleaf sign-in page
+                        .loginProcessingUrl("/signIn")
+                        .usernameParameter("email") // Tell Spring Security to use 'email' instead of 'username'
+                        .passwordParameter("password")// This is the form's action
+                        .defaultSuccessUrl("/dashboard", true) // Redirect to dashboard if login is successful
+                        .failureUrl("/signIn?error=true") // Show error message if login fails
+                        .permitAll()
+                )
+                    .logout(logout -> logout
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/signIn")
+                    )
+        .httpBasic(Customizer.withDefaults());
 
-        }).httpBasic(Customizer.withDefaults());
-
-//        }).formLogin(login -> login
-//                .loginPage("/signIn") // Use Thymeleaf sign-in page
-//                .defaultSuccessUrl("/dashboard", true) // Redirect to /dashboard after successful login
-//                .permitAll()
-//        ).logout(logout -> logout
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/signIn")); // Redirect to homepage after logout
+//        })
 
 
         return http.build();
@@ -76,6 +83,6 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         return authenticationManagerBuilder.build();
-    }
 
+    }
 }

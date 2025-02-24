@@ -6,6 +6,7 @@ import com.example.Antoflix.dto.request.user.SignInRequest;
 import com.example.Antoflix.dto.response.user.RegisterResponse;
 import com.example.Antoflix.dto.response.user.SignInResponse;
 import com.example.Antoflix.service.security.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,4 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
 }

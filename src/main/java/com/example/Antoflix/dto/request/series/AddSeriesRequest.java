@@ -1,6 +1,5 @@
 package com.example.Antoflix.dto.request.series;
 
-import com.example.Antoflix.entity.Genre;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
