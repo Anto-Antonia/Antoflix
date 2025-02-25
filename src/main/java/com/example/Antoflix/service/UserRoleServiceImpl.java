@@ -153,7 +153,6 @@ public class UserRoleServiceImpl implements UserRoleService{
             throw new UserNotFoundException("User not found");
         }
     }
-
     @Override
     public void updateUser(Integer id, UpdateUserRequest updateUserRequest) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -166,8 +165,6 @@ public class UserRoleServiceImpl implements UserRoleService{
             throw new UserNotFoundException("The user with id " + id + "does not exist");
         }
     }
-
-
 
     //added logic for adding and removing a movie to a favourite list
     @Override

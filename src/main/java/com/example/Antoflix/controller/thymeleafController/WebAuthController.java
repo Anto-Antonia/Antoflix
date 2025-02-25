@@ -56,8 +56,12 @@ public class WebAuthController {
     public String registerProcess(@ModelAttribute("registerRequest") RegisterRequest registerRequest, RedirectAttributes redirectAttributes){
         try {
             authService.registerUser(registerRequest);
-            redirectAttributes.addFlashAttribute("successMessage", "Registration successful! Please log in.");
-            return "redirect:/signIn"; // Redirect to sign-in page after successful registration
+           // redirectAttributes.addFlashAttribute("successMessage", "Registration successful! Please log in.");
+
+            // Automatically authenticate the user
+            authService.signIn(new SignInRequest(registerRequest.getEmail(), registerRequest.getPassword()));
+
+            return "redirect:/dashboard"; // Redirect to sign-in page after successful registration
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error: " + e.getMessage());
             return "redirect:/register"; // Reload registration page with error message

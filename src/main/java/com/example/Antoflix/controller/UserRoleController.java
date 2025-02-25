@@ -10,10 +10,12 @@ import com.example.Antoflix.dto.response.role.RoleResponse;
 import com.example.Antoflix.dto.response.user.UserResponse;
 import com.example.Antoflix.entity.User;
 import com.example.Antoflix.service.UserRoleService;
+import com.sun.security.auth.UserPrincipal;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -76,7 +78,6 @@ public class UserRoleController {
         RoleResponse roleResponse = userRoleService.getRole(id);
         return ResponseEntity.status(HttpStatus.OK).body(roleResponse);
     }
-
     @PatchMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest updateUserRequest){
         userRoleService.updateUser(id, updateUserRequest);

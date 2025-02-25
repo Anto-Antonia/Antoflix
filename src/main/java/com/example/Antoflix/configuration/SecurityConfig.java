@@ -30,10 +30,13 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth     // removed auth -> { auth
 
                     .requestMatchers("/", "/homepage").permitAll()
-                    .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
-                    .requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
-                    .requestMatchers("/api/register").permitAll() // pentru a inregistra un user cu un anumit rol(in practica doar un utilizator simplu ar trebui sa se poata inregistra cu rol de user)
-                    .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
+                  //  .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
+                    //.requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
+                  //  .requestMatchers("/api/register").permitAll() // pentru a inregistra un user cu un anumit rol(in practica doar un utilizator simplu ar trebui sa se poata inregistra cu rol de user)
+                 //   .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
+                        .requestMatchers("/", "/register", "/signIn", "/css/**", "/js/**", "/images/**").permitAll()
+                    .requestMatchers("/api/logout").permitAll() // pentru a deloga un user
+
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
                     .requestMatchers(HttpMethod.POST, "/api/v1/movies/movie").hasAuthority("admin")//endpoint protejat(doar un admin il poate accesa)
                     .requestMatchers(HttpMethod.GET, "/api/v1/users/{userId}/favorites").hasAuthority("user")
@@ -73,8 +76,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public PasswordEncoder passwordEncoder()
-    {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

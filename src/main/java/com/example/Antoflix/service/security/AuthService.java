@@ -1,6 +1,5 @@
 package com.example.Antoflix.service.security;
 
-import com.example.Antoflix.dto.request.user.AddUserRequest;
 import com.example.Antoflix.dto.request.user.RegisterRequest;
 import com.example.Antoflix.dto.request.user.SignInRequest;
 import com.example.Antoflix.dto.response.user.RegisterResponse;
@@ -16,28 +15,30 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
-    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder; // dependency injection instead of using BCrypt
 
-    public AuthService(UserRepository userRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager) {
+    //private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    public AuthService(UserRepository userRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public void getUserByEmail(String email){
-        Optional<User> userOptional = userRepository.findUserByUsername(email);
+    public void checkEmailAvailable(String email){
+       // Optional<User> userOptional = userRepository.findUserByUsername(email);
 
         if(userRepository.findUserByEmail(email).isPresent()){
             throw new UserAlreadyTakenException("Email already in use");
@@ -45,7 +46,7 @@ public class AuthService {
     }
 
     public RegisterResponse registerUser(RegisterRequest registerRequest){
-        getUserByEmail(registerRequest.getEmail());
+        checkEmailAvailable(registerRequest.getEmail());
 
         User user = new User();
         user.setUsername(registerRequest.getUsername());
@@ -73,18 +74,27 @@ public class AuthService {
 
     public SignInResponse signIn(SignInRequest signInRequest){
         try {
-            String email = signInRequest.getEmail();
-            String password = signInRequest.getPassword();
-
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+           // String email = signInRequest.getEmail(),
+           // String password = signInRequest.getPassword()
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            signInRequest.getEmail(),
+                            signInRequest.getPassword()
+                    )
+            );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            User user = userRepository.findUserByEmail(signInRequest.getEmail())   // fetch user from db
+                    .orElseThrow(()-> new BadCredentialsException("User with email not found"));
+
+            UserDetailsImpl userDetails = UserDetailsImpl.build(user); // converting to user detail impl + map response
+                    //(UserDetailsImpl) authentication.getPrincipal();
 
             return UserRoleMapper.fromUserDetailImpl(userDetails);
-        }catch(Exception e){
+        }catch(AuthenticationException e){
             throw new BadCredentialsException("Invalid email or password");
         }
     }
+
 }
