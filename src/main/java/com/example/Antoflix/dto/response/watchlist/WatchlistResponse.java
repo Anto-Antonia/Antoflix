@@ -13,4 +13,5 @@ import java.util.List;
 public class WatchlistResponse {
     private String name;
     private List<MovieResponse> movies;
+    private Integer userId; // user's id
 }

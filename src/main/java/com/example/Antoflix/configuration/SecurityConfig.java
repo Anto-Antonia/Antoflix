@@ -33,8 +33,8 @@ public class SecurityConfig {
                   //  .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
                     //.requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
                   //  .requestMatchers("/api/register").permitAll() // pentru a inregistra un user cu un anumit rol(in practica doar un utilizator simplu ar trebui sa se poata inregistra cu rol de user)
-                  .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
-                        .requestMatchers("/", "/register", "/signIn", "/css/**", "/js/**", "/images/**").permitAll()
+                    .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
+                    .requestMatchers("/", "/register", "/signIn", "/css/**", "/js/**", "/images/**").permitAll()
                     .requestMatchers("/api/logout").permitAll() // pentru a deloga un user
 
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
@@ -47,6 +47,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/genre/{id}").hasAuthority("admin")
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies/genres").hasAuthority("admin")
                     .requestMatchers(HttpMethod.GET, "/api/v1/watchlist/**").hasAuthority("user")
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/watchlist/{id}").hasAuthority("user")
                     .requestMatchers(HttpMethod.POST, "/api/v1/series").hasAuthority("admin")
                     .requestMatchers(HttpMethod.GET, "/api.v1/series").hasAuthority("user")
                     .requestMatchers(HttpMethod.GET, "/api.v1/series/seasons").hasAuthority("user")

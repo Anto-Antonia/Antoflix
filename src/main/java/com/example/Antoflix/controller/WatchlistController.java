@@ -24,8 +24,11 @@ public class WatchlistController {
 
     @PostMapping
     public ResponseEntity<WatchlistResponse> createWatchlist(@RequestBody AddWatchlistRequest addWatchlistRequest){ // 'principal.getName()' provides the username of the authenticated user
-        watchlistService.createWatchlist(addWatchlistRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Watchlist watchlist = watchlistService.createWatchlist(addWatchlistRequest);
+
+        WatchlistResponse response = watchlistMapper.toWatchListResponse(watchlist);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/{watchlistId}/movies/{movieId}")
@@ -45,5 +48,11 @@ public class WatchlistController {
     public ResponseEntity<WatchlistResponse> getWatchlistById (@PathVariable Integer watchlistId){
        WatchlistResponse watchlistResponse = watchlistService.getWatchlistById(watchlistId);
         return ResponseEntity.ok(watchlistResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteWatchlist(@PathVariable Integer id, Principal principal){
+        watchlistService.deleteWatchlist(id, principal);
+        return ResponseEntity.ok("Watchlist deleted successfully!");
     }
 }

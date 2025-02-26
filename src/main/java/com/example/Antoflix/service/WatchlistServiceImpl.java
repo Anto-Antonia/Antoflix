@@ -9,8 +9,13 @@ import com.example.Antoflix.mapper.WatchlistMapper;
 import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.UserRepository;
 import com.example.Antoflix.repository.WatchlistRepository;
+import com.example.Antoflix.service.security.CustomUserDetailsService;
+import com.example.Antoflix.service.security.UserDetailsImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,17 +36,18 @@ public class WatchlistServiceImpl implements WatchlistService{
 
     @Override
     public Watchlist createWatchlist(AddWatchlistRequest addWatchlistRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
+
         List<Movie> movies = movieRepository.findAllById(addWatchlistRequest.getMovieId());
             if(movies.isEmpty()){
                 throw new RuntimeException("No movies found with the provided IDs");
             }
 
-        Watchlist watchlist = watchlistMapper.createWatchlistRequest(addWatchlistRequest,movies);
+        Watchlist watchlist = watchlistMapper.createWatchlistRequest(addWatchlistRequest,movies, user);
 
-//        watchlist.setUser(user);
-        watchlist.setMovies(movies);
         return watchlistRepository.save(watchlist);
-//        User user = userRepository.findUserByUsername(username)
+//        User user = userRepository.findUserByUsername(userId)
 //                .orElseThrow(() -> new RuntimeException("User not found"));
 //
 //        List<Movie> movies = movieRepository.findAllById(addWatchlistRequest.getMovieId());
@@ -51,7 +57,7 @@ public class WatchlistServiceImpl implements WatchlistService{
 //
 //        // Pass the user to the mapper
 //        Watchlist watchlist = watchlistMapper.createWatchlistRequest(addWatchlistRequest, movies, user);
-//        watchlist.setUser(user); // added this <--
+//       // watchlist.setUser(user); // added this <--
 //
 //        return watchlistRepository.save(watchlist);
     }
@@ -81,4 +87,17 @@ public class WatchlistServiceImpl implements WatchlistService{
 
         return watchlistMapper.toWatchListResponse(watchlist);
     }
+
+    @Override
+    public void deleteWatchlist(Integer watchlistId, Principal principal) {
+        Watchlist watchlist = watchlistRepository.findById(watchlistId)
+                .orElseThrow(()-> new RuntimeException("Watchlist not found"));
+
+        if(!watchlist.getUser().getEmail().equals(principal.getName())){
+            throw new RuntimeException("You can only delete your own watchlists.");
+        }
+
+        watchlistRepository.delete(watchlist);
+    }
+
 }

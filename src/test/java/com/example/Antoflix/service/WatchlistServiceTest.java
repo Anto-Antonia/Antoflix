@@ -82,6 +82,7 @@ public class WatchlistServiceTest {
         verify(movieRepository, times(1)).findAllById(movieIds);
         verify(watchlistMapper, times(1)).createWatchlistRequest(addWatchlistRequest, List.of(movie));
         verify(watchlistRepository, times(1)).save(expectedWatchlist);
+
     }
 
     @Test
