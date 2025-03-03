@@ -22,5 +22,6 @@ public interface MovieGenreService {
     public List<MovieResponse> getAllMovies();
     List<MovieResponse> getAllMoviesAsc();
     public List<GenreResponse> getAllGenres();
+    List<MovieResponse> getMoviesByGenre(String genreName);
 
 }

@@ -18,7 +18,7 @@ public class WatchlistMapper {
     @Autowired
     private MovieGenreMapper movieGenreMapper;
 
-    public Watchlist createWatchlistRequest(AddWatchlistRequest addWatchlistRequest, List<Movie> movies, User user){// instead of addWatchlist now it's createWatchlist
+    public Watchlist createWatchlistRequest(AddWatchlistRequest addWatchlistRequest, List<Movie> movies, User user){
         Watchlist watchlist = new Watchlist();
         watchlist.setName(addWatchlistRequest.getName());
         watchlist.setMovies(movies);

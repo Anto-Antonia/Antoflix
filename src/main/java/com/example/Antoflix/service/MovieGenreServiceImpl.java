@@ -144,4 +144,12 @@ public class MovieGenreServiceImpl implements MovieGenreService {
         return genreResponses;
     }
 
+    @Override
+    public List<MovieResponse> getMoviesByGenre(String genreName) {
+        List<Movie> movies = movieRepository.findByGenres_IgnoreCase(genreName);
+        List<MovieResponse> responses = movies.stream().map(movieGenreMapper::fromMovieResponse).collect(Collectors.toList());
+
+        return responses;
+    }
+
 }

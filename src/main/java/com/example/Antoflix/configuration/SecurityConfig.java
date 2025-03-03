@@ -46,6 +46,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/{id}").hasAuthority("admin")
                     .requestMatchers(HttpMethod.DELETE, "/api/v1/movies/genre/{id}").hasAuthority("admin")
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies/genres").hasAuthority("admin")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/movies/{genreName}").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/v1/watchlist/**").hasAuthority("user")
                     .requestMatchers(HttpMethod.DELETE, "/api/v1/watchlist/{id}").hasAuthority("user")
                     .requestMatchers(HttpMethod.POST, "/api/v1/series").hasAuthority("admin")
