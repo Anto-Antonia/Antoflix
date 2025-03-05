@@ -1,19 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <title>Movies in <span th:text="${genreName}"></span></title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antoflix - Watch your favorite movies!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel = "stylesheet" th:href="@{/css/genre-movies-style.css}">
+
+    <!-- Default favicon-->
+    <link rel="icon" type="image/x-icon" th:href = "@{images/favicon_ico}">
+
+    <!--Png icons for dif resolutions-->
+    <link rel="icon" type="image/png" sizes="32x32" th:href = "@{images/favicon-32x32.png}">
+    <link rel="icon" type="image/png" size="16x16" th:href = "@{images/favicon-16x16.png}">
+
+    <!-- Apple touch Icon-->
+    <link rel="apple-touch-icon" sizes="180x180" th:href = "@{images/apple-touch-icon.png}">
+
+    <!-- Android Chrome Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" th:href = "@{images/android-chrome-192x192.png}">
+    <link rel="icon" type="image/png" sizes="512x512" th:href = "@{images/android-chrome-512x512.png}">
+
+    <!-- Manifest file -->
+    <link rel="manifest" th:href = "@{images/site.webmanifest}">
+
+    <script th:src = "@{/js/dashboard-script.js}" defer></script>
 </head>
 <body>
-<h1>Movies in <span th:text="${genreName}"></span></h1>
+<header class = "header">
+    <div class = "logo">
+        <h2> Anto<span class = "flix">flix</span></h2>
+    </div>
+    <div class = "main-nav">
+        <ul class = "main-header">
+            <li id="menu-item-1" class="menu-item-1">
+                <a th:href="@{/movies/}"><strong>Movies</strong></a>
+            </li>
 
-<ul>
-    <li th:each="movie : ${movies}">
-        <a th:href="@{/movies/{id}(id=${movie.id})}" th:text="${movie.title}"></a>
-    </li>
-</ul>
+            <li id="menu-item-2" class="menu-item-2">
+                <a th:href="@{/series/}"><strong>Series</strong></a>
+            </li>
 
-<a th:href="@{/}">Back to Homepage</a>
+            <div class = "dropdown">
+                <li id="menu-item-3" class="menu-item-3">
+                    <a th:href="@{/genres/}"><strong>Genres</strong><i class="fa-solid fa-chevron-down"></i></a>
+                    <ul class = "dropdown-menu">
+                        <li><a th:href="@{/genres/{genreName}(genreName='Action')}">Action</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Fantasy')}">Fantasy</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Horror')}">Horror</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Comedy')}">Comedy</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Musical')}">Musical</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Drama')}">Drama</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Adventure')}">Adventure</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='SF')}">SF</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Kids')}">Kids</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Superhero')}">Superhero</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Animation')}">Animation</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Anime')}">Anime</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Zombie Horror')}">Zombie Horror</a></li>
+                    </ul>
+                </li>
+            </div>
+
+            <li id="menu-item-4" class="menu-item-4">
+                <a th:href="@{/a-z/}"><strong>A-Z</strong></a>
+            </li>
+
+            <li id="menu-item-5" class="menu-item-5">
+                <a th:href="@{/new-release/}"><strong>New Added</strong></a>
+            </li>
+
+            <li id="menu-item-6" class="menu-item-6">
+                <a th:href="@{/watchlist}"><strong>My Watchlist</strong></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class = "profile">
+        <div class="profile-icon" id="profileIcon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div class="profile-dropdown" id="profileDropdown">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</header>
+<div class="homepage-box">
+    <div class = "content">
+        <h1>Movies in <span th:text="${genreName}"></span></h1>
+        <ul>
+            <li th:each="movie : ${movies}">
+                <p th:text="${movie.title}"></p>
+            </li>
+        </ul>
+
+        <p th:if="${#lists.isEmpty(movies)}">No movies found in this genre.</p>
+
+        <a th:href="@{/dashboard}">Back to Homepage</a>
+    </div>
+</div>
+
+
 </body>
 </html>

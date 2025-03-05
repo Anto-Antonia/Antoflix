@@ -45,19 +45,19 @@
                 <li id="menu-item-3" class="menu-item-3">
                     <a th:href="@{/genres/}"><strong>Genres</strong><i class="fa-solid fa-chevron-down"></i></a>
                     <ul class = "dropdown-menu">
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Action'}">Action</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Fantasy'}">Fantasy</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Horror'}">Horror</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Comedy'}">Comedy</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Musical'}">Musical</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Drama'}">Drama</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Adventure'}">Adventure</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='SF'}">SF</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Kids'}">Kids</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Superhero'}">Superhero</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Animation'}">Animation</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Anime'}">Anime</a></li>
-                        <li><a th:href="@{/api/v1/movies/movie/{genreName}(genreName='Zombie Horror'}">Zombie Horror</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Action')}">Action</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Fantasy')}">Fantasy</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Horror')}">Horror</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Comedy')}">Comedy</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Musical')}">Musical</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Drama')}">Drama</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Adventure')}">Adventure</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='SF')}">SF</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Kids')}">Kids</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Superhero')}">Superhero</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Animation')}">Animation</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Anime')}">Anime</a></li>
+                        <li><a th:href="@{/genres/{genreName}(genreName='Zombie Horror')}">Zombie Horror</a></li>
                     </ul>
                 </li>
             </div>
@@ -76,6 +76,11 @@
         </ul>
     </div>
 
+    <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" class="search-input" placeholder="Titles">
+    </div>
+
     <div class = "profile">
         <div class="profile-icon" id="profileIcon">
             <i class="fa-solid fa-user"></i>
@@ -83,6 +88,7 @@
 
         <div class="profile-dropdown" id="profileDropdown">
             <form th:action="@{/logout}" method="post">
+                <a href="settings.html">Account</a>
                 <button type="submit">Logout</button>
             </form>
         </div>

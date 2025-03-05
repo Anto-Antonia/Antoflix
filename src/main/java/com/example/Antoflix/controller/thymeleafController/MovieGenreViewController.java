@@ -22,7 +22,11 @@ public class MovieGenreViewController {
     @GetMapping("/{genreName}")
     public String getMoviesByGenre(@PathVariable String genreName, Model model){
         List<MovieResponse> movies = movieGenreService.getMoviesByGenre(genreName);
-        System.out.println("Movies: " + movies); // Log movies to console
+        System.out.println("Movies found: " + (movies != null ? movies.size() : "null"));
+        if (movies != null) {
+            movies.forEach(movie -> System.out.println("Movie: " + movie.getTitle()));
+        }
+
         model.addAttribute("genreName", genreName); // Pass genre name to the view
         model.addAttribute("movies", movies); // Pass movies to the view
         return "genre-movies"; // Return the 'movies.html' template

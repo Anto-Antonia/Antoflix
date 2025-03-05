@@ -18,3 +18,15 @@ document.addEventListener("DOMContentLoaded", function () {
         event.stopPropagation();
     });
 });
+
+
+// script for searchbar
+document.addEventListener('DOMContentLoaded', function () {
+    const searchIcon = document.querySelector('.search-bar i');
+    const searchBar = document.querySelector('.search-bar');
+
+    // Toggle visibility of search input when icon is clicked
+    searchIcon.addEventListener('click', function() {
+        searchBar.classList.toggle('open');
+    });
+});
