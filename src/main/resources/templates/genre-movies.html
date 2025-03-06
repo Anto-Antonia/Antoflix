@@ -34,11 +34,11 @@
     <div class = "main-nav">
         <ul class = "main-header">
             <li id="menu-item-1" class="menu-item-1">
-                <a th:href="@{/movies/}"><strong>Movies</strong></a>
+                <a th:href="@{/movies}"><strong>Movies</strong></a>
             </li>
 
             <li id="menu-item-2" class="menu-item-2">
-                <a th:href="@{/series/}"><strong>Series</strong></a>
+                <a th:href="@{/series}"><strong>Series</strong></a>
             </li>
 
             <div class = "dropdown">
@@ -76,6 +76,11 @@
         </ul>
     </div>
 
+    <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" class="search-input" placeholder="Titles">
+    </div>
+
     <div class = "profile">
         <div class="profile-icon" id="profileIcon">
             <i class="fa-solid fa-user"></i>
@@ -83,6 +88,7 @@
 
         <div class="profile-dropdown" id="profileDropdown">
             <form th:action="@{/logout}" method="post">
+                <a href="settings.html">Account</a>
                 <button type="submit">Logout</button>
             </form>
         </div>
@@ -91,13 +97,13 @@
 <div class="homepage-box">
     <div class = "content">
         <h1>Movies in <span th:text="${genreName}"></span></h1>
-        <ul>
+        <ul class="movie-list">
             <li th:each="movie : ${movies}">
                 <p th:text="${movie.title}"></p>
             </li>
         </ul>
 
-        <p th:if="${#lists.isEmpty(movies)}">No movies found in this genre.</p>
+        <p th:if="${#lists.isEmpty(movies)}" class="error-message">No movies found in this genre.</p>
 
         <a th:href="@{/dashboard}">Back to Homepage</a>
     </div>

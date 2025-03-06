@@ -13,6 +13,7 @@ import com.example.Antoflix.mapper.MovieGenreMapper;
 import com.example.Antoflix.repository.GenreRepository;
 import com.example.Antoflix.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.query.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

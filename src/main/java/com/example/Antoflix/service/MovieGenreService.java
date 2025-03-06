@@ -7,7 +7,9 @@ import com.example.Antoflix.dto.response.genre.GenreResponse;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.entity.Genre;
 import com.example.Antoflix.entity.Movie;
+import org.hibernate.query.Page;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 public interface MovieGenreService {
