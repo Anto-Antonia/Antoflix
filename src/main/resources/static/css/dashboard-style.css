@@ -36,7 +36,7 @@ body{
 }
 .logo{
     position: absolute;
-    left: 200px;
+    left: 160px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 25px;
     padding-bottom: 5px;
@@ -57,7 +57,7 @@ body{
     display: flex;
     list-style: none;
     position: relative;
-    padding-left: 450px;
+    padding-left: 390px;
 }
 
 .main-header li {
@@ -79,7 +79,7 @@ body{
 .search-bar{
     position: absolute;
     color: aliceblue;
-    margin-left: 1460px;
+    margin-left: 1480px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -118,7 +118,7 @@ body{
 .profile {
     position: relative;
     display: inline-block;
-    margin-left: 260px;
+    margin-left: 230px;
 }
 
 .profile-icon{

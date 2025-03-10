@@ -33,6 +33,11 @@
     </div>
     <div class = "main-nav">
         <ul class = "main-header">
+
+            <li id="menu-item-0" class="menu-item-0">
+                <a th:href="@{/dashboard}"><strong>Home</strong></a>
+            </li>
+
             <li id="menu-item-1" class="menu-item-1">
                 <a th:href="@{/movies}"><strong>Movies</strong></a>
             </li>
@@ -88,7 +93,7 @@
 
         <div class="profile-dropdown" id="profileDropdown">
             <form th:action="@{/logout}" method="post">
-                <a href="settings.html">Account</a>
+                <a th:href="@{settings}">Account</a>
                 <button type="submit">Logout</button>
             </form>
         </div>
