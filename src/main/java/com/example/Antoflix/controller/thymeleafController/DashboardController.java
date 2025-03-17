@@ -9,4 +9,14 @@ public class DashboardController {
     public String dashboard() {
         return "dashboard";
     }
+
+    @GetMapping("/admin-dashboard")
+    public String adminDashboard(){
+        return "admin-dashboard";
+    }
+
+    @GetMapping("/admin-panel")
+    public String adminPanel() {
+        return "admin-panel";
+    }
 }

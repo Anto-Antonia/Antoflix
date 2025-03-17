@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+
+    <link rel = "stylesheet" th:href = "@{/css/admin-panel-style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Default favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{images/favicon_ico}">
+
+    <!--Png icons for dif resolutions-->
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{images/favicon-32x32.png}">
+    <link rel="icon" type="image/png" size="16x16" th:href="@{images/favicon-16x16.png}">
+
+    <!-- Apple touch Icon-->
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{images/apple-touch-icon.png}">
+
+    <!-- Android Chrome Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{images/android-chrome-192x192.png}">
+    <link rel="icon" type="image/png" sizes="512x512" th:href="@{images/android-chrome-512x512.png}">
+
+    <!-- Manifest file -->
+    <link rel="manifest" th:href="@{images/site.webmanifest}">
+
+    <script th:src="@{/js/admin-panel-script.js}"></script>
+</head>
+<body>
+<div class="homepage-box">
+    <div class="smaller-box">
+        <div class="content">
+            <h3> User & Role control</h3>
+
+            <p>User</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addUser')"> Add User</li>
+                <li onclick="showContent('getUserById')"> Get User by ID</li>
+                <li onclick="showContent('getAllUsers')"> Get All Users</li>
+                <li onclick="showContent('updateUser')"> Update User</li>
+                <li onclick="showContent('deleteUser')"> Delete User</li>
+            </ul>
+
+            <hr> <!--Thin separator-->
+
+            <p>Role</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addRole')">Add Role</li>
+                <li onclick="showContent('addRoleToUser')">Add Role To User</li>
+                <li onclick="showContent('getRoleById')">Get Role By ID</li>
+                <li onclick="showContent('deleteRole')">Delete Role</li>
+            </ul>
+
+            <hr>
+
+            <h3> Movie & genre control</h3>
+
+            <p>Movie</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addMovie')">Add Movie</li>
+                <li onclick="showContent('getMovieById')">Get Movie By ID</li>
+                <li onclick="showContent('getAllMovies')">Get All Movies</li>
+                <li onclick="showContent('getAllMoviesAs')">Get All Movies Asc</li>
+                <li onclick="showContent('getMovieByGenre')">Get Movies By Genre</li>
+                <li onclick="showContent('updateMovie')">Update Movie</li>
+                <li onclick="showContent('deleteMovie')">Delete Movie</li>
+            </ul>
+
+            <hr>
+
+            <p>Genre</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addGenre')">Add Genre</li>
+                <li onclick="showContent('getAllGenres')">Get All Genres</li>
+                <li onclick="showContent('updateMovieGenre')">Update Movie Genre</li>
+                <li onclick="showContent('removeGenreFromMovie')">Remove Genre From Movie</li>
+                <li onclick="showContent('deleteGenre')">Delete Genre</li>
+            </ul>
+
+            <hr>
+
+            <h3>Season, Series & Episode control</h3>
+
+            <p>Season</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addSeason')">Add Season</li>
+                <li onclick="showContent('getSeasonById')">Get Season By Id</li>
+                <li onclick="showContent('getAllSeasons')">Get All Seasons</li>
+                <li onclick="showContent('deleteSeason')">Delete Season</li>
+            </ul>
+
+            <hr>
+
+            <p>Series</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addSeason')">Add Series</li>
+                <li onclick="showContent('getSeriesById')">Get Series By Id</li>
+                <li onclick="showContent('getAllSeries')">Get All Series</li>
+                <li onclick="showContent('updateSeriesGenre')">Update Series Genre</li>
+                <li onclick="showContent('updateSeries')">Update Series</li>
+                <li onclick="showContent('removeGenreFromSeries')">Remove Genre From Series</li>
+                <li onclick="showContent('deleteSeries')">Delete Series</li>
+            </ul>
+
+            <hr>
+
+            <p>Episode</p>
+            <ul class="control-pannel">
+                <li onclick="showContent('addEpisode')">Add Episode</li>
+                <li onclick="showContent('getEpisodeById')">Get Episode By Id</li>
+                <li onclick="showContent('getAllEpisodes')">Get All Episodes</li>
+                <li onclick="showContent('deleteEpisode')">Delete Episode</li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="settings-content">
+        <h2 class="headline">Hello there admin! Welcome to the Admin Panel! :D</h2>
+
+        <p>Here you'll be able to do all sort of changes, from user changes all the way to movies/series!</p>
+        <br>
+        <p>Just scroll on the left side, look for whatever you need to do, click and do all the changes!</p>
+        <br>
+        <p>If you need to do user changes, please keep in mind to always ask for their consent first.</p>
+
+    </div>
+</div>
+</body>
+</html>

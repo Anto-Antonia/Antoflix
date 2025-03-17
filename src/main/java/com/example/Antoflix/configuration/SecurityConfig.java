@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -56,14 +58,24 @@ public class SecurityConfig {
                     .anyRequest().authenticated()//;
                 )
                 .formLogin(login -> login
-                        .loginPage("/signIn")  // Thymeleaf sign-in page
+                        .loginPage("/signIn") // thymeleaf sign in page
                         .loginProcessingUrl("/signIn")
-                        .usernameParameter("email") // Tell Spring Security to use 'email' instead of 'username'
-                        .passwordParameter("password")// This is the form's action
-                        .defaultSuccessUrl("/dashboard", true) // Redirect to dashboard if login is successful
-                        .failureUrl("/signIn?error=true") // Show error message if login fails
+                        .usernameParameter("email") // Tells Spring Security yo use "email" instead of "username"
+                        .passwordParameter("password") // This is the form's action
+                        //.defaultSuccessUrl("/dashboard", true) // Redirect to dashboard if login is successful
+                        .successHandler((request, response, authentication) -> {
+                            String role = authentication.getAuthorities().iterator().next().getAuthority();
+                            if (role.equals("admin")) {
+                                response.sendRedirect("/admin-dashboard");
+                            } else if (role.equals("user")) {
+                                response.sendRedirect("/dashboard");
+                            }
+                        })
+                        .failureUrl("/signIn?error=true") // shows error message if log in fails
                         .permitAll()
                 )
+
+
                     .logout(logout -> logout
                             .logoutUrl("/logout")
                             .logoutSuccessUrl("/signIn")
@@ -75,7 +87,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -1,13 +1,11 @@
 package com.example.Antoflix.controller;
 
-import com.example.Antoflix.dto.request.user.AddUserRequest;
 import com.example.Antoflix.dto.request.user.RegisterRequest;
 import com.example.Antoflix.dto.request.user.SignInRequest;
 import com.example.Antoflix.dto.response.user.RegisterResponse;
 import com.example.Antoflix.dto.response.user.SignInResponse;
 import com.example.Antoflix.service.security.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
