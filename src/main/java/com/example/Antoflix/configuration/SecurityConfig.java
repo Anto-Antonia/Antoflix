@@ -24,12 +24,12 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
         http.authorizeHttpRequests(auth -> auth     // removed auth -> { auth
+
 
                     .requestMatchers("/", "/homepage").permitAll()
                   //  .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
@@ -38,6 +38,7 @@ public class SecurityConfig {
                     .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
                     .requestMatchers("/", "/register", "/signIn", "/css/**", "/js/**", "/images/**").permitAll()
                     .requestMatchers("/api/logout").permitAll() // pentru a deloga un user
+                    .requestMatchers("/admin-panel").hasAuthority("admin")
 
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
                     .requestMatchers(HttpMethod.POST, "/api/v1/movies/movie").hasAuthority("admin")//endpoint protejat(doar un admin il poate accesa)
@@ -62,7 +63,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/signIn")
                         .usernameParameter("email") // Tells Spring Security yo use "email" instead of "username"
                         .passwordParameter("password") // This is the form's action
-                        //.defaultSuccessUrl("/dashboard", true) // Redirect to dashboard if login is successful
+                       // .defaultSuccessUrl("/dashboard", true) // Redirect to dashboard if login is successful
                         .successHandler((request, response, authentication) -> {
                             String role = authentication.getAuthorities().iterator().next().getAuthority();
                             if (role.equals("admin")) {

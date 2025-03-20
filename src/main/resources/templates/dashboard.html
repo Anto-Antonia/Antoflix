@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home - Antoflix</title>
 
@@ -48,7 +48,7 @@
 
             <div class = "dropdown">
                 <li id="menu-item-3" class="menu-item-3">
-                    <a th:href="@{/genres/}"><strong>Genres</strong><i class="fa-solid fa-chevron-down"></i></a>
+                    <a><strong>Genres</strong><i class="fa-solid fa-chevron-down"></i></a>
                     <ul class = "dropdown-menu">
                         <li><a th:href="@{/genres/{genreName}(genreName='Action')}">Action</a></li>
                         <li><a th:href="@{/genres/{genreName}(genreName='Fantasy')}">Fantasy</a></li>
@@ -66,10 +66,6 @@
                     </ul>
                 </li>
             </div>
-
-            <li id="menu-item-4" class="menu-item-4">
-                <a th:href="@{/a-z/}"><strong>A-Z</strong></a>
-            </li>
 
             <li id="menu-item-5" class="menu-item-5">
                 <a th:href="@{/new-release/}"><strong>New Added</strong></a>
@@ -95,6 +91,7 @@
             <form th:action="@{/logout}" method="post">
                 <a th:href="@{settings}">Account</a>
                 <button type="submit">Logout</button>
+
             </form>
         </div>
     </div>

@@ -42,7 +42,20 @@ body{
     justify-content: flex-start;
     padding-top: 20px;
     overflow-y: auto; /* allows scrolling if needed*/
+}
 
+.top-box{
+    position: absolute;
+    top: 46px
+}
+
+.top-box a{
+    text-decoration: none;
+    color: rgb(167, 160, 160);
+}
+
+.top-box a:hover{
+    color: white;
 }
 
 .content{
