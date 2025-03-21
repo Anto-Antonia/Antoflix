@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-			<version>3.1.1.RELEASE</version>
+			<version>3.1.1.RELEASE</version>  <!-- Version for thymeleaf spring security matching the spring boot -->
 		</dependency>
 
 	</dependencies>

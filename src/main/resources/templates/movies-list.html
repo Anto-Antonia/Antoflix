@@ -35,7 +35,13 @@
             <ul class = "main-header">
 
                 <li id="menu-item-0" class="menu-item-0">
-                    <a th:href="@{/dashboard}"><strong>Home</strong></a>
+                    <a sec:authorize="hasAuthority('admin')" th:href="@{/admin-dashboard}">
+                        <strong>Home</strong>
+                    </a>
+
+                    <a sec:authorize="!hasAuthority('admin')" th:href="@{/dashboard}">
+                        <strong>Home</strong>
+                    </a>
                 </li>
 
                 <li id="menu-item-1" class="menu-item-1">

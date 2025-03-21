@@ -103,6 +103,7 @@ body{
 
 .main-header li a:hover {
     color: red;
+    cursor: pointer;
 }
 
 .search-bar{

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Movies in <span th:text="${genreName}"></span></title>
 
@@ -35,7 +35,13 @@
         <ul class = "main-header">
 
             <li id="menu-item-0" class="menu-item-0">
-                <a th:href="@{/dashboard}"><strong>Home</strong></a>
+                <a sec:authorize="hasAuthority('admin')" th:href="@{/admin-dashboard}">
+                    <strong>Home</strong>
+                </a>
+
+                <a sec:authorize="!hasAuthority('admin')" th:href="@{/dashboard}">
+                    <strong>Home</strong>
+                </a>
             </li>
 
             <li id="menu-item-1" class="menu-item-1">
@@ -94,6 +100,11 @@
         <div class="profile-dropdown" id="profileDropdown">
             <form th:action="@{/logout}" method="post">
                 <a href="settings.html">Account</a>
+
+                <div sec:authorize="hasAuthority('admin')">
+                    <a th:href="@{/admin-panel}">Admin Panel</a>
+                </div>
+
                 <button type="submit">Logout</button>
             </form>
         </div>
