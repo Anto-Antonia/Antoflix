@@ -13,7 +13,8 @@ import com.example.Antoflix.mapper.MovieGenreMapper;
 import com.example.Antoflix.repository.GenreRepository;
 import com.example.Antoflix.repository.MovieRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -152,5 +153,15 @@ public class MovieGenreServiceImpl implements MovieGenreService {
 
         return responses;
     }
+
+    @Override
+    public List<MovieResponse> getRecentMovies(int count) {
+        Pageable pageable = PageRequest.of(0, count);
+        List<Movie> movies = movieRepository.findRecentMovie(pageable);
+        List<MovieResponse> responses = movies.stream().map(movieGenreMapper::fromMovieResponse).collect(Collectors.toList());
+
+        return responses;
+    }
+
 
 }

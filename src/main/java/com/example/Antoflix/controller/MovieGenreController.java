@@ -94,4 +94,10 @@ public class MovieGenreController {
         List<MovieResponse> responses = movieGenreService.getMoviesByGenre(genreName);
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
+
+    @GetMapping("/recent")
+    public ResponseEntity<List<MovieResponse>> getRecentlyAdded(@RequestParam(defaultValue = "10")int count){
+        List<MovieResponse> recentMovies = movieGenreService.getRecentMovies(count);
+        return ResponseEntity.status(HttpStatus.OK).body(recentMovies);
+    }
 }
