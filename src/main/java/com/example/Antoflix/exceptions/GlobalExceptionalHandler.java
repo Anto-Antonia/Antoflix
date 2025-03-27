@@ -5,6 +5,7 @@ import com.example.Antoflix.exceptions.genre.AddGenreException;
 import com.example.Antoflix.exceptions.movie.AddMovieException;
 import com.example.Antoflix.exceptions.movie.AddMovieToWatchlistException;
 import com.example.Antoflix.exceptions.role.RoleNotFoundException;
+import com.example.Antoflix.exceptions.series.SeriesNotFoundException;
 import com.example.Antoflix.exceptions.user.UserAlreadyTakenException;
 import com.example.Antoflix.exceptions.user.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 
@@ -104,4 +104,16 @@ public class GlobalExceptionalHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(SeriesNotFoundException.class)
+    public ResponseEntity<Object> handleSeriesNotFoundException(SeriesNotFoundException exception, HttpServletRequest request){
+        ApiError error = ApiError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND)
+                .message(exception.getMessage())
+                .debugMessage(ExceptionUtils.getRootCauseMessage(exception))
+                .path(request.getRequestURI())
+                .build();
+
+        return buildResponseEntity(error);
+    }
 }

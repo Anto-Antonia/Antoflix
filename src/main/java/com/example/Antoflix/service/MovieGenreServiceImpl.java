@@ -122,7 +122,7 @@ public class MovieGenreServiceImpl implements MovieGenreService {
     public List<MovieResponse> getAllMovies() {
         List<Movie> movies = movieRepository.findAll();
         List<MovieResponse> movieResponses = movies.stream()
-                .map(element -> movieGenreMapper.fromMovieResponse(element)).collect(Collectors.toList());
+                .map(movieGenreMapper::fromMovieResponse).collect(Collectors.toList());
 
         return movieResponses;
     }
@@ -132,7 +132,7 @@ public class MovieGenreServiceImpl implements MovieGenreService {
     public List<MovieResponse> getAllMoviesAsc() {
         List<Movie> movies = movieRepository.findAllByOrderByTitleAsc();
         List<MovieResponse> movieResponses = movies.stream()
-                .map(element -> movieGenreMapper.fromMovieResponse(element)).collect(Collectors.toList());
+                .map(movieGenreMapper::fromMovieResponse).collect(Collectors.toList());
 
         return movieResponses;
     }
@@ -141,7 +141,7 @@ public class MovieGenreServiceImpl implements MovieGenreService {
     public List<GenreResponse> getAllGenres() {
         List<Genre> genres = genreRepository.findAll();
         List<GenreResponse> genreResponses = genres.stream()
-                .map(element -> movieGenreMapper.fromGenreResponse(element)).collect(Collectors.toList());
+                .map(movieGenreMapper::fromGenreResponse).collect(Collectors.toList());
 
         return genreResponses;
     }
@@ -158,7 +158,8 @@ public class MovieGenreServiceImpl implements MovieGenreService {
     public List<MovieResponse> getRecentMovies(int count) {
         Pageable pageable = PageRequest.of(0, count);
         List<Movie> movies = movieRepository.findRecentMovie(pageable);
-        List<MovieResponse> responses = movies.stream().map(movieGenreMapper::fromMovieResponse).collect(Collectors.toList());
+        List<MovieResponse> responses = movies.stream()
+                .map(movieGenreMapper::fromMovieResponse).collect(Collectors.toList());
 
         return responses;
     }
