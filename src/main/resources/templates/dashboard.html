@@ -79,7 +79,7 @@
 
     <div class="search-bar">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" class="search-input" placeholder="Titles">
+        <input type="text" id="search-input" class="search-input" placeholder="Titles">
     </div>
 
     <div class = "profile">
@@ -98,6 +98,17 @@
 </header>
 
 <div class="homepage-box">
+
+    <div class="results-container">
+        <div class="result-grid">
+            <div th:each="movie : ${movies}" class="result-item">
+                <p th:text="${movie.title}"></p>
+            </div>
+            <div th:each="series : ${series}" class="result-item">
+                <p th:text="${series.title}"></p>
+            </div>
+        </div>
+    </div>
 
 </div>
 

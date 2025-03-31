@@ -1,10 +1,8 @@
 package com.example.Antoflix.controller;
 
 import com.example.Antoflix.dto.response.series.SeriesResponse;
-import com.example.Antoflix.exceptions.GlobalExceptionalHandler;
 import com.example.Antoflix.exceptions.series.SeriesNotFoundException;
 import com.example.Antoflix.service.SeriesSearchEngineService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
