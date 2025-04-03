@@ -21,6 +21,53 @@ body{
     align-items: center;
     position: absolute;
 }
+
+.results-container {
+         width: 100%;
+          padding: 20px;
+          text-align: center;
+          display: flex;
+          justify-content: center;
+}
+
+.result-grid {
+       display: grid;
+         grid-template-columns: repeat(3, 1fr); /* Forces 3 items per row */
+         gap: 20px;
+         max-width: 900px; /* Adjust width for proper spacing */
+         margin: 0 auto;
+}
+
+.result-item {
+    background-color: rgba(0, 0, 0, 0.7);
+       padding: 15px;
+       border-radius: 8px;
+       text-align: center;
+       color: white;
+       font-family: Verdana, Geneva, Tahoma, sans-serif;
+       box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+       transition: transform 0.2s ease-in-out;
+       width: 100%; /* Ensure each item fits properly */
+}
+
+.result-item:hover {
+    transform: scale(1.05);
+}
+
+/*.result-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+*/
+
+.no-results{
+     color: white;
+     font-size: 24px;
+     text-align: center;
+     margin-top: 20px;
+}
 .content{
     width: 100%;
     text-align: center;

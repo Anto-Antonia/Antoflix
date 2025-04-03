@@ -31,20 +31,30 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!query) return;
 
         Promise.all([
-            fetch(`/api/v1/movieSearch/title?title=${encodeURIComponent(query)}`).then(res => res.json()).catch(() => []),
-            fetch(`/api/v1/seriesSearch?title=${encodeURIComponent(query)}`).then(res => res.json()).catch(() => [])
+            fetch(`/api/v1/movieSearch/title?title=${encodeURIComponent(query)}`)
+                .then(res => res.ok ? res.json() : []),
+            fetch(`/api/v1/seriesSearch?title=${encodeURIComponent(query)}`)
+                .then(res => res.ok ? res.json() : [])
         ])
         .then(([movies, series]) => {
-            displaySearchResults(movies, series);
+            if (movies.length === 0 && series.length === 0) {
+                    homepageBox.innerHTML = `<p class="no-results">Whoops, we don't have what you're looking for :(</p>`;
+              } else{
+                displaySearchResults(movies, series);
+              }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error)
+            homepageBox.innerHTML = `<p class="no-results">Whoops, something went wrong. Try again later.</p>`;
+            });
+
     }
 
     function displaySearchResults(movies, series) {
         homepageBox.innerHTML = ''; // Clear previous results
 
         if (movies.length === 0 && series.length === 0) {
-            homepageBox.innerHTML = `<p style="color: white;">No results found.</p>`;
+            homepageBox.innerHTML = `<p class="no-results">Whoops, we don't have what you're looking for :(</p>`;
             return;
         }
 
@@ -76,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Pressing "Enter" should trigger the search
-    searchInput.addEventListener('keypress', function (event) {
+    searchInput.addEventListener('keydown', function (event) { // from 'keypress' to 'keydown' -> keypress os deprecated and might not work in all browsers
         if (event.key === 'Enter') {
             event.preventDefault();
             performSearch(searchInput.value.trim());

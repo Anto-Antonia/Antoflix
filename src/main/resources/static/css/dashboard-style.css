@@ -62,6 +62,13 @@ body{
 }
 */
 
+.no-results{
+     color: white;
+     font-size: 24px;
+     text-align: center;
+     margin-top: 20px;
+}
+
 .header{
     position: relative;
     display: flex;
