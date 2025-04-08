@@ -101,4 +101,10 @@ public class UserRoleController {
         List<MovieResponse> responses = userRoleService.getFavouriteMovies(userId);
         return ResponseEntity.ok(responses);
     }
+
+    @PatchMapping("/update-password")
+    public ResponseEntity<String> updateUserPassword(@RequestBody UpdateUserPasswordRequest request){
+        userRoleService.updateUserPassword(request);
+        return ResponseEntity.ok("Password updated successfully");
+    }
 }

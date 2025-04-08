@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +28,6 @@ public class SecurityConfig {
         http.csrf().disable();
         http.authorizeHttpRequests(auth -> auth     // removed auth -> { auth
 
-
                     .requestMatchers("/", "/homepage").permitAll()
                   //  .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
                     //.requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
@@ -43,6 +40,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/v1/movies").hasAuthority("user") // endpoint protejat( doar un user il poate accesa)
                     .requestMatchers(HttpMethod.POST, "/api/v1/movies/movie").hasAuthority("admin")//endpoint protejat(doar un admin il poate accesa)
                     .requestMatchers(HttpMethod.GET, "/api/v1/users/{userId}/favorites").hasAuthority("user")
+                    .requestMatchers(HttpMethod.PATCH, "/api/v1/users/update-password").hasAuthority("user")
                     .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("admin")
                     .requestMatchers(HttpMethod.POST, "/api/v1/movies/genre").hasAuthority("admin")
                     .requestMatchers(HttpMethod.PATCH, "/api/v1/movies/genre/{id}").hasAuthority("admin")
@@ -61,7 +59,7 @@ public class SecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/signIn") // thymeleaf sign in page
                         .loginProcessingUrl("/signIn")
-                        .usernameParameter("email") // Tells Spring Security yo use "email" instead of "username"
+                        .usernameParameter("email") // Tells Spring Security to use "email" instead of "username"
                         .passwordParameter("password") // This is the form's action
                        // .defaultSuccessUrl("/dashboard", true) // Redirect to dashboard if login is successful
                         .successHandler((request, response, authentication) -> {

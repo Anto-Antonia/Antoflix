@@ -19,7 +19,10 @@ import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.RoleRepository;
 import com.example.Antoflix.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,13 +37,15 @@ public class UserRoleServiceImpl implements UserRoleService{
     private final UserRoleMapper userRoleMapper;
     private final MovieRepository movieRepository; // added movieRepo for the relationship between user and movie
     private final MovieGenreMapper movieGenreMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserRoleServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserRoleMapper userRoleMapper, MovieRepository movieRepository, MovieGenreMapper movieGenreMapper) {
+    public UserRoleServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserRoleMapper userRoleMapper, MovieRepository movieRepository, MovieGenreMapper movieGenreMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userRoleMapper = userRoleMapper;
         this.movieRepository = movieRepository;
         this.movieGenreMapper = movieGenreMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -197,5 +202,25 @@ public class UserRoleServiceImpl implements UserRoleService{
         return user.getFavoriteMovie().stream()
                 .map(movieGenreMapper::fromMovieResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateUserPassword(UpdateUserPasswordRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
+
+        if(!passwordEncoder.matches(request.getOldPassword(), user.getPassword())){
+            throw new IllegalArgumentException("Old password is incorrect");
+        }
+
+        if(passwordEncoder.matches(request.getNewPassword(), user.getPassword())){
+            throw new IllegalArgumentException("New password cannot be the same as the old password.");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
     }
 }

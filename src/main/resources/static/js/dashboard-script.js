@@ -103,3 +103,49 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// script for new added movies
+document.addEventListener('DOMContentLoaded', function () {
+    const newAddedLink = document.getElementById('new-added-link');
+    const homepageBox = document.querySelector('.homepage-box');
+
+    newAddedLink.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        homepageBox.innerHTML = `<p class="loading">Loading new releases...</p>`;
+
+        fetch('/api/v1/movies/recent?count=10')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch new movies');
+                }
+                return response.json();
+            })
+            .then(movies => {
+                displayNewlyAddedMovies(movies);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                homepageBox.innerHTML = `<p class="no-results">Error fetching new releases.</p>`;
+            });
+    });
+
+    function displayNewlyAddedMovies(movies) {
+        homepageBox.innerHTML = ''; // Clear previous content
+
+        if (movies.length === 0) {
+            homepageBox.innerHTML = `<p class="no-results">No new movies added.</p>`;
+            return;
+        }
+
+        let resultsHTML = `<h2 style="color: white;">Newly Added Movies</h2><div class="result-grid">`;
+        movies.forEach(movie => {
+            resultsHTML += `
+                <div class="result-item fade-in">
+                    <p>${movie.title}</p>
+                </div>`;
+        });
+        resultsHTML += `</div>`;
+        homepageBox.innerHTML = resultsHTML;
+    }
+});

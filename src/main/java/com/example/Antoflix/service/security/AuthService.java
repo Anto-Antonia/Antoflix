@@ -28,8 +28,6 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder; // dependency injection instead of using BCrypt
 
-    //private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     public AuthService(UserRepository userRepository, RoleRepository roleRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -96,5 +94,4 @@ public class AuthService {
             throw new BadCredentialsException("Invalid email or password");
         }
     }
-
 }

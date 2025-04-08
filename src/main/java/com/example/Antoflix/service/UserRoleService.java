@@ -26,4 +26,5 @@ public interface UserRoleService {
     public void addMovieToFavourites(Integer userId, Integer movieId);
     void removeMovieFromFavourites(Integer userId, Integer movieId);
     public List<MovieResponse> getFavouriteMovies(Integer userId);
+    void updateUserPassword(UpdateUserPasswordRequest request);
 }
