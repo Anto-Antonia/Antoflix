@@ -19,8 +19,22 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: absolute;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .results-container {
@@ -52,7 +66,8 @@ body{
 }
 
 .result-item:hover {
-    transform: scale(1.05);
+     transform: translateY(-5px);
+     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
 /*.result-item img {
@@ -62,6 +77,12 @@ body{
     border-radius: 5px;
 }
 */
+.loading, .no-results {
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 30px;
+}
 
 .no-results{
      color: white;

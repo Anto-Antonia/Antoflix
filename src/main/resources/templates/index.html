@@ -6,6 +6,8 @@
 
     <!-- Thymeleaf link for CSS -->
     <link rel="stylesheet" th:href="@{/css/style-index.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 
     <!-- Favicons -->
     <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
@@ -13,6 +15,8 @@
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/images/favicon-16x16.png}">
     <link rel="apple-touch-icon" sizes="180x180" th:href="@{/images/apple-touch-icon.png}">
     <link rel="manifest" th:href="@{/images/site.webmanifest}">
+
+    <script th:src="@{/js/index-script.js}" defer></script>
 
 </head>
 <body>
@@ -43,7 +47,38 @@
                 <a th:href="@{/register}"><button class="register-button"> Get started</button></a></p>
         </div>
     </div>
+    <div class="intro-text">
+        <h2>Welcome to <span class="f">Anto</span><span class="flix">flix</span></h2>
+        <p>Your one-stop destination for endless movies and TV shows. Create watchlists, explore genres, and enjoy unlimited entertainment, all for free!</p>
+        <p>Get started now and dive into the world of movies!</p>
+    </div>
 </div>
+
+        <h2 class="trending-movies"> Trending now </h2>
+    <div class="album-container">
+        <div class="album-card-wrapper">
+            <div class="arrow-left">
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+
+        <div class="movie-cards">
+            <div class="movie-card"><p>Movie 1</p></div>
+            <div class="movie-card"><p>Movie 2</p></div>
+            <div class="movie-card"><p>Movie 3</p></div>
+            <div class="movie-card"><p>Movie 4</p></div>
+            <div class="movie-card"><p>Movie 5</p></div>
+            <div class="movie-card"><p>Movie 7</p></div>
+            <div class="movie-card"><p>Movie 8</p></div>
+            <div class="movie-card"><p>Movie 9</p></div>
+            <div class="movie-card"><p>Movie 10</p></div>
+
+        </div>
+            <div class="arrow-right">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+<br>
 
 
 </body>
