@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/watchlist")
@@ -54,5 +55,12 @@ public class WatchlistController {
     public ResponseEntity<String> deleteWatchlist(@PathVariable Integer id, Principal principal){
         watchlistService.deleteWatchlist(id, principal);
         return ResponseEntity.ok("Watchlist deleted successfully!");
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<WatchlistResponse>> getWatchlistForCurrentUser(Principal principal){
+        String email = principal.getName();
+        List<WatchlistResponse> watchlistResponses = watchlistService.getUsersWatchlist(email);
+        return ResponseEntity.ok(watchlistResponses);
     }
 }

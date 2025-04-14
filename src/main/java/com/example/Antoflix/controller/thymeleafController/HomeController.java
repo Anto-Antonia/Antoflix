@@ -1,6 +1,6 @@
 package com.example.Antoflix.controller.thymeleafController;
 
-import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -21,4 +21,9 @@ public class HomeController {
 //            return "redirect: /dashboard";
 //        }
 //    }
+
+    @GetMapping("/watchlist")
+    public String getWatchlistPage(){
+        return "watchlist";
+    }
 }

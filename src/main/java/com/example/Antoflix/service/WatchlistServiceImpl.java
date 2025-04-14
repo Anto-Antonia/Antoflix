@@ -13,6 +13,7 @@ import com.example.Antoflix.service.security.CustomUserDetailsService;
 import com.example.Antoflix.service.security.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -98,6 +99,16 @@ public class WatchlistServiceImpl implements WatchlistService{
         }
 
         watchlistRepository.delete(watchlist);
+    }
+
+    @Override
+    public List<WatchlistResponse> getUsersWatchlist(String email) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException("User not found"));
+
+        List<Watchlist> watchlists = watchlistRepository.findByUser(user);
+
+        return watchlists.stream().map(watchlistMapper::toWatchListResponse).collect(Collectors.toList());
     }
 
 }
