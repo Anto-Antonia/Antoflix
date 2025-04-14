@@ -149,3 +149,18 @@ document.addEventListener('DOMContentLoaded', function () {
         homepageBox.innerHTML = resultsHTML;
     }
 });
+
+// shows/hides the main nav when scrolling on the page
+let lastScrollY = window.scrollY;
+const nav = document.getElementById('header');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY) {
+        // Scrolling down
+        nav.classList.add('hide');
+    } else {
+        // Scrolling up
+        nav.classList.remove('hide');
+    }
+    lastScrollY = window.scrollY;
+});

@@ -2,6 +2,7 @@ body{
     background-color: rgb(22, 21, 21);
     display: flex;
 }
+
 .homepage-box{
     width: 60%;
     max-width: 1200px; /* Prevents it from being too large */
@@ -21,6 +22,7 @@ body{
     align-items: center;
     position: absolute;
 }
+
 .results-container {
          width: 100%;
           padding: 20px;
@@ -109,6 +111,20 @@ body{
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     padding: 10px;
 }
+
+#header{
+    position: fixed;
+    /* top: 0; */
+    /* left: 0; */
+    width: 100%;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
+}
+
+#header.hide{
+    transform: translateY(-100%);;
+}
+
 .logo{
     position: absolute;
     left: 160px;
