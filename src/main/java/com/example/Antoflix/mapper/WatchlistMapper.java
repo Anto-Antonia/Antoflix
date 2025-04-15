@@ -1,5 +1,6 @@
 package com.example.Antoflix.mapper;
 
+import com.example.Antoflix.dto.request.watchlist.AddEmptyWatchlistRequest;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
@@ -38,5 +39,20 @@ public class WatchlistMapper {
         watchlistResponse.setMovies(movies);
 
         return watchlistResponse;
+    }
+
+    public Watchlist createEmptyWatchlistRequest(AddEmptyWatchlistRequest addEmptyWatchlistRequest, User user){
+        Watchlist watchlist = new Watchlist();
+        watchlist.setName(addEmptyWatchlistRequest.getName());
+        watchlist.setUser(user);
+
+        return watchlist;
+    }
+
+    public WatchlistResponse toEmptyWatchlistResponse(Watchlist watchlist){
+        WatchlistResponse response = new WatchlistResponse();
+        response.setName(watchlist.getName());
+
+        return response;
     }
 }

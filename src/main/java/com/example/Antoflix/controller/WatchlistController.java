@@ -1,5 +1,6 @@
 package com.example.Antoflix.controller;
 
+import com.example.Antoflix.dto.request.watchlist.AddEmptyWatchlistRequest;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
 import com.example.Antoflix.entity.Watchlist;
@@ -28,6 +29,15 @@ public class WatchlistController {
         Watchlist watchlist = watchlistService.createWatchlist(addWatchlistRequest);
 
         WatchlistResponse response = watchlistMapper.toWatchListResponse(watchlist);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/empty")
+    public ResponseEntity<WatchlistResponse> createEmptyWatchlist(@RequestBody AddEmptyWatchlistRequest addEmptyWatchlistRequest){
+        Watchlist watchlist = watchlistService.createEmptyWatchlist(addEmptyWatchlistRequest);
+
+        WatchlistResponse response = watchlistMapper.toEmptyWatchlistResponse(watchlist);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }

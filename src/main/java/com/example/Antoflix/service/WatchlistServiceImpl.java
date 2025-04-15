@@ -1,5 +1,6 @@
 package com.example.Antoflix.service;
 
+import com.example.Antoflix.dto.request.watchlist.AddEmptyWatchlistRequest;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
 import com.example.Antoflix.entity.Movie;
@@ -62,6 +63,17 @@ public class WatchlistServiceImpl implements WatchlistService{
 //
 //        return watchlistRepository.save(watchlist);
     }
+
+    @Override
+    public Watchlist createEmptyWatchlist(AddEmptyWatchlistRequest addEmptyWatchlistRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = ((UserDetailsImpl) authentication.getPrincipal()).getUser();
+
+        Watchlist watchlist = watchlistMapper.createEmptyWatchlistRequest(addEmptyWatchlistRequest, user);
+
+        return watchlistRepository.save(watchlist);
+    }
+
 
     @Override
     public void addMovieToWatchList(Integer watchlistId, Integer movieId) {

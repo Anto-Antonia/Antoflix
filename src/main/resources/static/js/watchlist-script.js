@@ -153,44 +153,105 @@ document.addEventListener('DOMContentLoaded', function () {
 // script for watchlists
 document.addEventListener('DOMContentLoaded', function () {
     const container = document.getElementById('watchlist-container');
+    const modal = document.getElementById('watchlist-modal');
+    const cancelBtn = document.getElementById('cancel-modal');
+    const createBtn = document.getElementById('create-watchlist');
+    const watchlistNameInput = document.getElementById('watchlist-name');
 
-    fetch('/api/v1/watchlist/my')
-        .then(response => {
-            if (!response.ok) throw new Error('Failed to fetch watchlists');
-            return response.json();
-        })
-        .then(watchlists => {
-            if (watchlists.length === 0) {
-                container.innerHTML = `
-                    <div class="create-watchlist-box">
-                        <i class="fa-solid fa-plus"></i>
-                        <p>Create your first Watchlist</p>
-                    </div>
-                `;
-            } else {
-                let html = '';
-                watchlists.forEach(wl => {
-                    html += `
-                        <div class="watchlist-box">
-                            <h3>${wl.name}</h3>
-                            <p>${wl.movies.length} movies</p>
-                        </div>
-                    `;
-                });
+ function openModal() {
+         modal.classList.remove('hidden');
+         setTimeout(() => watchlistNameInput.focus(), 100);
+     }
 
-                // Plus icon for new watchlist
-                html += `
-                    <div class="create-watchlist-box">
-                        <i class="fa-solid fa-plus"></i>
-                        <p>Create new Watchlist</p>
-                    </div>
-                `;
-                container.innerHTML = html;
+     function closeModal() {
+         modal.classList.add('hidden');
+         watchlistNameInput.value = '';
+     }
+
+    function renderWatchlists() {
+         fetch('/api/v1/watchlist/my')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Failed to fetch watchlists');
+                        return response.json();
+                    })
+                    .then(watchlists => {
+                        let html = '';
+                        if (watchlists.length === 0) {
+                            html = `
+                                <div class="create-watchlist-box" id="create-watchlist-box">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <p>Create your first Watchlist</p>
+                                </div>
+                            `;
+                        } else {
+                            watchlists.forEach(wl => {
+                                html += `
+                                    <div class="watchlist-box">
+                                        <h3>${wl.name}</h3>
+                                        <p>${wl.movies.length} movies</p>
+                                    </div>
+                                `;
+                            });
+
+                            html += `
+                                <div class="create-watchlist-box" id="create-watchlist-box">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <p>Create new Watchlist</p>
+                                </div>
+                            `;
+                        }
+
+                        container.innerHTML = html;
+
+                        // Re-attach click listener to the new plus box
+                        const plusBox = document.getElementById('create-watchlist-box');
+                        if (plusBox) {
+                            plusBox.addEventListener('click', openModal);
+                        }
+                    })
+                    .catch(err => {
+                        container.innerHTML = `<p class="no-results">Could not load watchlists. Try again later.</p>`;
+                        console.error(err);
+                    });
             }
-        })
-        .catch(err => {
-            container.innerHTML = `<p class="no-results">Could not load watchlists. Try again later.</p>`;
-            console.error(err);
+
+    // Initial fetch
+    renderWatchlists();
+
+    // Cancel modal
+    cancelBtn.addEventListener('click', closeModal);
+
+    // Escape key to close modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") {
+            closeModal();
+        }
+    });
+
+    // Create new watchlist
+        createBtn.addEventListener('click', () => {
+            const name = watchlistNameInput.value.trim();
+            if (!name) return;
+
+            fetch('/api/v1/watchlist/empty', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: name})
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to create watchlist');
+                    return response.json();
+                })
+                .then(() => {
+                    closeModal();
+                    renderWatchlists(); // Refresh UI
+                })
+                .catch(err => {
+                    alert('Error creating watchlist');
+                    console.error(err);
+                });
         });
 });
 

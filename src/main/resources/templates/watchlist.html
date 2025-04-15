@@ -90,6 +90,9 @@
         <div class="profile-dropdown" id="profileDropdown">
             <form th:action="@{/logout}" method="post">
                 <a th:href="@{settings}">Account</a>
+                    <div sec:authorize="hasAuthority('admin')">
+                        <a th:href="@{/admin-panel}">Admin Panel</a>
+                    </div>
                 <button type="submit">Logout</button>
 
             </form>
@@ -100,5 +103,17 @@
 <div class="homepage-box watchlist-grid" id="watchlist-container">
 
 </div>
+
+<div id="watchlist-modal" class="modal hidden">
+    <div class="modal-content">
+        <h3>Create New Watchlist</h3>
+        <input type="text" id="watchlist-name" placeholder="Enter watchlist name" />
+        <div class="modal-actions">
+            <button id="create-watchlist">Create</button>
+            <button id="cancel-modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

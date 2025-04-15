@@ -1,5 +1,6 @@
 package com.example.Antoflix.service;
 
+import com.example.Antoflix.dto.request.watchlist.AddEmptyWatchlistRequest;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
 import com.example.Antoflix.entity.User;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public interface WatchlistService {
     Watchlist createWatchlist(AddWatchlistRequest addWatchlistRequest);
+    Watchlist createEmptyWatchlist(AddEmptyWatchlistRequest addEmptyWatchlistRequest);
     void addMovieToWatchList(Integer watchlistId, Integer movieId);
     void removeMovieFromWatchlist(Integer watchlistId, Integer movieId);
     WatchlistResponse getWatchlistById(Integer watchlistId);

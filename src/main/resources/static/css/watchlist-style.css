@@ -2,6 +2,11 @@ body{
     background-color: rgb(22, 21, 21);
     display: flex;
 }
+
+body.modal-open {
+    overflow: hidden;
+  }
+
 .homepage-box{
     width: 60%;
     max-width: 1200px; /* Prevents it from being too large */
@@ -327,7 +332,7 @@ body{
 }
 
 .watchlist-box, .create-watchlist-box {
-     background-color: #1c1c1c;
+     background-color: #161515;
        border-radius: 12px;
        padding: 20px;
        color: white;
@@ -349,3 +354,86 @@ body{
      font-size: 2rem;
         margin-bottom: 10px;
 }
+
+.modal {
+    position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* for the darkened effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  }
+
+  .modal-content {
+    animation: modalFadeIn 0.3s ease-out;
+    background-color: #222;
+    padding: 20px  30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    color: #fff;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Hidden by default */
+  .hidden {
+    display: none;
+  }
+
+  .modal input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 100%; /* ensures it fills the modal’s width */
+    box-sizing: border-box;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .modal-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #cancel-modal {
+    background-color: #444;
+    color: white;
+  }
+
+  #cancel-modal:hover{
+    background-color: #161515;
+  }
+
+  #create-watchlist {
+    background-color: #03a9f4;
+    color: white;
+  }
+
+  #create-watchlist:hover{
+    background-color: #1181b4;
+  }
+
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
