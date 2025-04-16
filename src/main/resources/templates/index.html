@@ -62,24 +62,98 @@
             </div>
 
         <div class="movie-cards">
-            <div class="movie-card"><p>Movie 1</p></div>
-            <div class="movie-card"><p>Movie 2</p></div>
-            <div class="movie-card"><p>Movie 3</p></div>
-            <div class="movie-card"><p>Movie 4</p></div>
-            <div class="movie-card"><p>Movie 5</p></div>
-            <div class="movie-card"><p>Movie 7</p></div>
-            <div class="movie-card"><p>Movie 8</p></div>
-            <div class="movie-card"><p>Movie 9</p></div>
-            <div class="movie-card"><p>Movie 10</p></div>
+            <div class="movie-card" id="movie-item-1"
+                 data-title="Inception"
+                 data-description="A thief who steals secrets through dreams."
+                 data-genre="Sci-Fi"
+                 data-time=" 10 August 2014">
+                <p>Movie 1</p>
+            </div>
 
+            <div class="movie-card" id="movie-item-2"
+                 data-title="Lunar Odysey"
+                 data-description="A misterious colony of aliens have to deal with abnormal events coming from their blue moon."
+                 data-genre="Sci-Fi"
+                 data-time=" 10 August 2014">
+                <p>Movie 2</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-3"
+                 data-title="Star Wars - Return of the jedi"
+                 data-description="Han Solo resqued from Jabba the Hutt, the Rebels attack second Death Star. Luke Skywalker confronts Darth Vader and the Emperor. I am a Jedi, like my father before me."
+                 data-genre="Sci-Fi, Fantasy, Adventure, Action"
+                 data-time=" 25 May 1983">
+                <p>Movie 3</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-4"
+                 data-title="Star Wars - Revenge of the Sith"
+                 data-description="With the Clone Wars coming to it's end, Obi-Wan Kenobi pursues a new threat, while Anakin Skywalker is lured by Chancellor Palpatine into a sinister plot for galactic domination."
+                 data-genre="Sci-Fi, Action"
+                 data-time=" 19 May 2005">
+                <p>Movie 4</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-5"
+                 data-title="Star Wars - The Phantom Menace"
+                 data-description="Two Jedi escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, but the long dormant Sith resurface to claim their original glory."
+                 data-genre="Action, Kids"
+                 data-time=" 19 May 1999">
+                <p>Movie 5</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-6"
+                 data-title="The hobbit: An Unexpected Journey"
+                 data-description="	A reluctant Hobbit, Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of dwarves to reclaim their mountain home and the gold within it from the dragon Smaug."
+                 data-genre="Fantasy, Adventure"
+                 data-time=" 14 December 2012">
+                <p>Movie 6</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-7"
+                 data-title="Venom"
+                 data-description="A failed reporter is bonded to an alien entity, one of many symbiotes who have invaded Earth. But the being takes a liking to Earth and decides to protect it."
+                 data-genre="Sci-Fi, Action, Adventure, Superhero"
+                 data-time=" 5 October 2018">
+                <p>Movie 7</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-8"
+                 data-title="Moana"
+                 data-description="In ancient Polynesia, when a terrible curse incurred by the demigod Maui reaches Moana's island, she answers the Ocean's call to seek out Maui to set things right."
+                 data-genre="Fantasy, Comedy, Adventure, Animation"
+                 data-time=" 23 November 2016">
+                <p>Movie 8</p>
+            </div>
+
+            <div class="movie-card" id="movie-item-9"
+                 data-title="The walking dead"
+                 data-description="Sheriff Deputy Rick Grimes wakes up from a coma to learn the world is in ruins and must lead a group of survivors to stay alive."
+                 data-genre="Horror, Thriller, Drama, Zombie Horror"
+                 data-time=" 2010-2022">
+                <p>Movie 9</p>
+            </div>
         </div>
             <div class="arrow-right">
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
         </div>
     </div>
-<br>
+    <br>
 
+<div class="modal hidden" id="movie-modal">
+    <div class="modal-content">
+        <span id="close-movie-modal" class="close-btn">&times;</span>
+        <h3 id="movie-title">Movie Title</h3>
+        <p id="movie-description">This is a short description of the movie...</p>
+
+        <p><strong>Genre:</strong> <span id="movie-genre" class="genre-tags-container">Action</span></p>
+
+        <p><strong>Release Date:</strong><span id="movie-time"> 5 May 1999</span></p>
+
+        <button onclick="location.href='/register.html'" class="register-btn">Register to Watch</button>
+    </div>
+</div>
 
 </body>
 </html>

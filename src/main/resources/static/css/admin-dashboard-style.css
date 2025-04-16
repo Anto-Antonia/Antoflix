@@ -3,6 +3,10 @@ body{
     display: flex;
 }
 
+body.modal-open {
+    overflow: hidden;
+  }
+
 .homepage-box{
     width: 60%;
     max-width: 1200px; /* Prevents it from being too large */
