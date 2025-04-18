@@ -4,7 +4,7 @@ const movieCards = document.querySelector('.movie-cards');
 
 // Width of one movie card + margin
 const cardWidth = 200 + 15; // Adjust based on your CSS
-const visibleCards = 5; // Number of visible cards
+const visibleCards = 7; // Number of visible cards
 const maxIndex = movieCards.children.length - visibleCards; // Max index based on number of visible cards
 
 let currentIndex = 0;
