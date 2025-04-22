@@ -103,7 +103,7 @@ body{
 
 .movie-item:hover{
  transform: translateY(-5px);
- }
+}
 
 .header{
     position: relative;

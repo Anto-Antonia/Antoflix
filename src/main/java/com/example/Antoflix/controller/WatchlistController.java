@@ -1,5 +1,7 @@
 package com.example.Antoflix.controller;
 
+import com.example.Antoflix.dto.request.movie.AddMovieToWatchlist;
+import com.example.Antoflix.dto.request.movie.AddMovieToWatchlistByName;
 import com.example.Antoflix.dto.request.watchlist.AddEmptyWatchlistRequest;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
@@ -8,6 +10,8 @@ import com.example.Antoflix.mapper.WatchlistMapper;
 import com.example.Antoflix.service.WatchlistService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -47,6 +51,14 @@ public class WatchlistController {
         watchlistService.addMovieToWatchList(watchlistId, movieId);
         //return ResponseEntity.status(HttpStatus.OK).body("Movie added to watchlist!");
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/addMovieToWatchlist")
+    public ResponseEntity<String> addMovieToUserWatchlist(@RequestBody AddMovieToWatchlistByName request){ // Removed the Authentication from method parameters
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        watchlistService.addMovieToUserWatchlist(email, request.getWatchlistName(), request.getMovieId());
+        return ResponseEntity.ok("Movie added to watchlist successfully");
     }
 
     @DeleteMapping("/{watchlistId}/movies/{movieId}")

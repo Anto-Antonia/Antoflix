@@ -17,4 +17,5 @@ public interface WatchlistService {
     WatchlistResponse getWatchlistById(Integer watchlistId);
     void deleteWatchlist(Integer watchlistId, Principal principal);
     List<WatchlistResponse> getUsersWatchlist(String email);
+    void addMovieToUserWatchlist(String email, String watchlistName, Integer movieId);
 }

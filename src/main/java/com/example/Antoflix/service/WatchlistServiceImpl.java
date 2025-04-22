@@ -85,6 +85,18 @@ public class WatchlistServiceImpl implements WatchlistService{
     }
 
     @Override
+    public void addMovieToUserWatchlist(String email, String watchlistName, Integer movieId) {
+        User user = userRepository.findUserByEmail(email).orElseThrow(()-> new RuntimeException("User not found"));
+        Watchlist watchlist = watchlistRepository.findByUserAndName(user, watchlistName).orElseThrow(()-> new RuntimeException("Watchlist not found"));
+        Movie movie = movieRepository.findById(movieId).orElseThrow(()-> new RuntimeException("Movie not found."));
+
+        if(!watchlist.getMovies().contains(movie)){
+            watchlist.getMovies().add(movie);
+            watchlistRepository.save(watchlist);
+        }
+    }
+
+    @Override
     public void removeMovieFromWatchlist(Integer watchlistId, Integer movieId) {
         Watchlist watchlist = watchlistRepository.findById(watchlistId).orElseThrow(()-> new IllegalArgumentException("Watchlist not found"));
         Movie movie = movieRepository.findById(movieId).orElseThrow(()-> new IllegalArgumentException("Movie not found"));
@@ -122,5 +134,4 @@ public class WatchlistServiceImpl implements WatchlistService{
 
         return watchlists.stream().map(watchlistMapper::toWatchListResponse).collect(Collectors.toList());
     }
-
 }
