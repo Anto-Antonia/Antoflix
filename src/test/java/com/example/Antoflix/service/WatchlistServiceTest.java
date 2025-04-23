@@ -10,14 +10,19 @@ import com.example.Antoflix.mapper.WatchlistMapper;
 import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.UserRepository;
 import com.example.Antoflix.repository.WatchlistRepository;
+import com.example.Antoflix.service.security.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +63,17 @@ public class WatchlistServiceTest {
 
     @Test
     public void createWatchlist_whenSuccessful_createWatchlist(){
+
+        UserDetailsImpl userDetails = mock(UserDetailsImpl.class);
+        when(userDetails.getUser()).thenReturn(user);
+
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(userDetails);
+
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+
+        SecurityContextHolder.setContext(securityContext);
         List<Integer> movieIds = List.of(1);
 
         AddWatchlistRequest addWatchlistRequest = new AddWatchlistRequest();
@@ -73,14 +89,14 @@ public class WatchlistServiceTest {
         expectedWatchlist.setName("New watchlist");
 
         when(movieRepository.findAllById(movieIds)).thenReturn(List.of(movie));
-        when(watchlistMapper.createWatchlistRequest(addWatchlistRequest, List.of(movie))).thenReturn(expectedWatchlist);
+        when(watchlistMapper.createWatchlistRequest(addWatchlistRequest, Arrays.asList(movie), user)).thenReturn(expectedWatchlist);
         when(watchlistRepository.save(expectedWatchlist)).thenReturn(expectedWatchlist);
 
         Watchlist actualWatchlist = watchlistService.createWatchlist(addWatchlistRequest);
 
         assertEquals(expectedWatchlist, actualWatchlist);
         verify(movieRepository, times(1)).findAllById(movieIds);
-        verify(watchlistMapper, times(1)).createWatchlistRequest(addWatchlistRequest, List.of(movie));
+        verify(watchlistMapper, times(1)).createWatchlistRequest(addWatchlistRequest, Arrays.asList(movie), user);
         verify(watchlistRepository, times(1)).save(expectedWatchlist);
 
     }
