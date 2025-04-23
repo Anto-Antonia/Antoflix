@@ -3,6 +3,7 @@ package com.example.Antoflix.service;
 import com.example.Antoflix.dto.request.episode.AddEpisodeRequest;
 import com.example.Antoflix.dto.request.season.AddSeasonRequest;
 import com.example.Antoflix.dto.request.series.AddSeriesRequest;
+import com.example.Antoflix.dto.request.series.UpdateSeriesRequest;
 import com.example.Antoflix.dto.response.episode.EpisodeResponse;
 import com.example.Antoflix.dto.response.genre.GenreResponse;
 import com.example.Antoflix.dto.response.season.SeasonResponse;
@@ -11,6 +12,7 @@ import com.example.Antoflix.entity.Episode;
 import com.example.Antoflix.entity.Genre;
 import com.example.Antoflix.entity.Season;
 import com.example.Antoflix.entity.Series;
+import com.example.Antoflix.exceptions.episode.EpisodeNotFoundException;
 import com.example.Antoflix.exceptions.season.SeasonNotFoundException;
 import com.example.Antoflix.exceptions.series.SeriesNotFoundException;
 import com.example.Antoflix.mapper.SeasonSeriesEpisodeMapper;
@@ -27,6 +29,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -234,7 +237,131 @@ public class SeriesSeasonEpisodeServiceTest {
 
         // THEN
         assertNotNull(response);
-        assertEquals();
+        assertEquals(1, response.getEpisodeNr());
+        assertEquals(1, response.getSeasonNr());
+        assertEquals("30min", response.getDuration());
+        assertEquals("Episode title", response.getTitle());
+        assertEquals("Description of the episode", response.getDescription());
 
+        verify(episodeRepository, times(1)).findById(1);
+    }
+
+    @Test
+    public void getEpisodeById_whenEpisodeDoesNotExist_throwException(){
+        // GIVEN
+        when(episodeRepository.findById(1)).thenReturn(Optional.empty());
+
+        // WHEN
+        assertThrows(EpisodeNotFoundException.class, ()->{
+            service.getEpisodeById(1);
+        });
+
+        // THEN
+        verify(episodeRepository, times(1)).findById(1);
+    }
+
+    @Test
+    public void updateSeriesGenre_whenSuccessful_updateGenres(){
+        int seriesId = 1;
+        List<Integer> genreId = List.of(1);
+
+        // GIVEN
+        when(seriesRepository.findById(seriesId)).thenReturn(Optional.of(series));
+        when(genreRepository.findAllById(genreId)).thenReturn(List.of(genre));
+
+        // WHEN
+        service.updateSeriesGenre(seriesId, genreId);
+
+        // THEN
+        assertEquals(1, series.getGenres().size());
+
+        verify(seriesRepository, times(1)).findById(seriesId);
+        verify(genreRepository, times(1)).findAllById(genreId);
+        verify(seriesRepository, times(1)).save(series);
+    }
+
+    @Test
+    public void updateSeries_whenSuccessful_updateSeries(){
+        UpdateSeriesRequest request = new UpdateSeriesRequest("New series title", "New description");
+
+        // GIVEN
+        when(seriesRepository.findById(1)).thenReturn(Optional.of(series));
+
+        // WHEN
+        service.updateSeries(1, request);
+
+        // THEN
+        assertEquals("New series title", series.getTitle());
+        assertEquals("New description", series.getDescription());
+
+        verify(seriesRepository, times(1)).findById(1);
+        verify(seriesRepository, times(1)).save(series);
+    }
+
+    @Test
+    public void deleteSeries_whenSuccessful_removeSeries(){
+
+        // WHEN
+        service.deleteSeries(1);
+
+        // THEN
+        verify(seriesRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    public void deleteSeason_whenSuccessful_removeSeason(){
+        service.deleteSeason(1);
+        verify(seasonRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    public void deleteEpisode_whenSuccessful_removeEpisode(){
+        service.deleteEpisode(1);
+        verify(episodeRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    public void getAllSeries_whenSuccessful_returnSeries(){
+        // GIVEN
+        when(seriesRepository.findAll()).thenReturn(List.of(series));
+        when(mapper.fromSeriesResponse(series)).thenReturn(seriesResponse);
+
+        // WHEN
+       List<SeriesResponse> responses = service.getAllSeries();
+
+        // THEN
+        assertEquals(1, responses.size());
+
+        verify(seriesRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void getAllSeasons_whenSuccessful_returnSeasons(){
+        // GIVEN
+        when(seasonRepository.findAll()).thenReturn(List.of(season));
+        when(mapper.fromSeasonResponse(season)).thenReturn(seasonResponse);
+
+        // WHEN
+        List<SeasonResponse> responses = service.getAllSeasons();
+
+        // THEN
+        assertEquals(1, responses.size());
+
+        verify(seasonRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void getAllEpisodes_whenSuccessful_returnEpisodes(){
+        // GIVEN
+        when(episodeRepository.findAll()).thenReturn(List.of(episode));
+        when(mapper.fromEpisodeResponse(episode)).thenReturn(episodeResponse);
+
+        // WHEN
+        List<EpisodeResponse> responses = service.getAllEpisodes();
+
+        // THEN
+        assertEquals(1, responses.size());
+
+        verify(episodeRepository, times(1)).findAll();
     }
 }

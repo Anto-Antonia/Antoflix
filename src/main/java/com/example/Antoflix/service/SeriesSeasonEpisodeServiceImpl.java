@@ -107,7 +107,6 @@ public class SeriesSeasonEpisodeServiceImpl implements SeriesSeasonEpisodeServic
         Series series = seriesRepository.findById(id)                                    // Creating a series object, searching in the repository for it by id,
                 .orElseThrow(()-> new SeriesNotFoundException("Series not found"));    // then throwing an exception if not found
 
-
         List<Genre> genreList = genreRepository.findAllById(genreId);               // creating a list for genres, searching all of them in the repository by id
         series.setGenres(genreList);                // setting the desired genre to the series
 

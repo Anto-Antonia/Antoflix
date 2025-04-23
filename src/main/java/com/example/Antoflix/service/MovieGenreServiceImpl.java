@@ -67,6 +67,7 @@ public class MovieGenreServiceImpl implements MovieGenreService {
 
         List<Genre> genres = genreRepository.findAllById(genreId);
         movie.setGenres(genres);
+
         movieRepository.save(movie);
     }
 
