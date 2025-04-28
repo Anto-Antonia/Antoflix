@@ -1,5 +1,6 @@
 package com.example.Antoflix.service;
 
+import com.example.Antoflix.dto.request.watchlist.AddEmptyWatchlistRequest;
 import com.example.Antoflix.dto.request.watchlist.AddWatchlistRequest;
 import com.example.Antoflix.dto.response.movie.MovieResponse;
 import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
@@ -49,16 +50,18 @@ public class WatchlistServiceTest {
 
     @BeforeEach
     void setup(){
-        User user = new User();
+        user = new User();
         user.setId(1);
+        user.setUsername("user name");
+        user.setEmail("user@email.com");
 
-        Movie movie = new Movie();
+        movie = new Movie();
         movie.setId(1);
 
-        Watchlist watchList = new Watchlist();
-        watchList.setId(1);
-        watchList.setName("New watchlist");
-        watchList.setUser(user);
+        watchlist = new Watchlist();
+        watchlist.setId(1);
+        watchlist.setName("New watchlist.");
+        watchlist.setUser(user);
     }
 
     @Test
@@ -74,6 +77,7 @@ public class WatchlistServiceTest {
         when(securityContext.getAuthentication()).thenReturn(authentication);
 
         SecurityContextHolder.setContext(securityContext);
+
         List<Integer> movieIds = List.of(1);
 
         AddWatchlistRequest addWatchlistRequest = new AddWatchlistRequest();
@@ -98,7 +102,32 @@ public class WatchlistServiceTest {
         verify(movieRepository, times(1)).findAllById(movieIds);
         verify(watchlistMapper, times(1)).createWatchlistRequest(addWatchlistRequest, Arrays.asList(movie), user);
         verify(watchlistRepository, times(1)).save(expectedWatchlist);
+    }
 
+    @Test
+    public void createEmptyWatchlist_whenSuccessful_createWatchlist(){
+
+        UserDetailsImpl userDetails = mock(UserDetailsImpl.class);
+        when(userDetails.getUser()).thenReturn(user);
+
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(userDetails);
+
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+
+        SecurityContextHolder.setContext(securityContext);
+
+        AddEmptyWatchlistRequest request = new AddEmptyWatchlistRequest();
+        request.setName("New watchlist.");
+
+        when(watchlistMapper.createEmptyWatchlistRequest(request, user)).thenReturn(watchlist);
+        when(watchlistRepository.save(watchlist)).thenReturn(watchlist);
+
+        Watchlist watchlist1 = watchlistService.createEmptyWatchlist(request);
+
+        assertEquals("New watchlist.", watchlist1.getName());
+        verify(watchlistRepository, times(1)).save(watchlist);
     }
 
     @Test

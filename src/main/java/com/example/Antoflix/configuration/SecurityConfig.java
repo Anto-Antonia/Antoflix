@@ -31,7 +31,7 @@ public class SecurityConfig {
                     .requestMatchers("/", "/homepage").permitAll()
                   //  .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
                     //.requestMatchers("/api/v1/users/role").permitAll() // ca sa pot adauga roluri ( in practica ar trebui protejat)
-                  //  .requestMatchers("/api/register").permitAll() // pentru a inregistra un user cu un anumit rol(in practica doar un utilizator simplu ar trebui sa se poata inregistra cu rol de user)
+                   .requestMatchers("/api/register").permitAll() // pentru a inregistra un user cu un anumit rol(in practica doar un utilizator simplu ar trebui sa se poata inregistra cu rol de user)
                     .requestMatchers("/api/signIn").permitAll() // pentru a loga un utilizator
                     .requestMatchers("/", "/register", "/signIn", "/css/**", "/js/**", "/images/**").permitAll()
                     .requestMatchers("/api/logout").permitAll() // pentru a deloga un user

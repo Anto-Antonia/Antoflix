@@ -5,7 +5,8 @@ const movieCards = document.querySelector('.movie-cards');
 // Width of one movie card + margin
 const cardWidth = 200 + 15; // Adjust based on your CSS
 const visibleCards = 7; // Number of visible cards
-const maxIndex = movieCards.children.length - visibleCards; // Max index based on number of visible cards
+const totalCards = movieCards.children.length;
+const maxIndex = totalCards - visibleCards;
 
 let currentIndex = 0;
 
@@ -44,12 +45,14 @@ movieModal.addEventListener('click', (e) => {
   }
 });
 
+// Add interactivity to movie cards
 document.querySelectorAll('.movie-card').forEach(card => {
   card.addEventListener('click', () => {
     const title = card.getAttribute('data-title') || "Unknown Movie";
     const desc = card.getAttribute('data-description') || "No description.";
     const genre = card.getAttribute('data-genre') || "N/A";
     const time = card.getAttribute('data-time') || "No date time release.";
+    const image = card.getAttribute('data-image') || "No image provided.";
 
     movieTitle.textContent = title;
     movieDescription.textContent = desc;
@@ -65,6 +68,9 @@ document.querySelectorAll('.movie-card').forEach(card => {
       tag.textContent = genres.trim();
       genreContainer.appendChild(tag);
     });
+
+    const movieImage = document.getElementById('movie-image');
+    movieImage.setAttribute('src', image)
 
     movieModal.classList.remove('hidden');
   });

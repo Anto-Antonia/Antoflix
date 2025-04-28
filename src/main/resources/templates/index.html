@@ -63,6 +63,7 @@
 
         <div class="movie-cards">
             <div class="movie-card" id="movie-item-1"
+                 data-image = "images/Inception.png"
                  data-title="Inception"
                  data-description="A thief who steals secrets through dreams."
                  data-genre="Sci-Fi"
@@ -72,6 +73,7 @@
             </div>
 
             <div class="movie-card" id="movie-item-2"
+                 data-image= "images/LunarOdyssey.png"
                  data-title="Lunar Odysey"
                  data-description="A misterious colony of aliens have to deal with abnormal events coming from their blue moon."
                  data-genre="Sci-Fi"
@@ -80,6 +82,7 @@
             </div>
 
             <div class="movie-card" id="movie-item-3"
+                 data-image= "images/SpaceBattle.png"
                  data-title="Star Wars - Return of the jedi"
                  data-description="Han Solo resqued from Jabba the Hutt, the Rebels attack second Death Star. Luke Skywalker confronts Darth Vader and the Emperor. I am a Jedi, like my father before me."
                  data-genre="Sci-Fi, Fantasy, Adventure, Action"
@@ -89,6 +92,7 @@
             </div>
 
             <div class="movie-card" id="movie-item-4"
+                 data-image= "images/MysticDivide.png"
                  data-title="Mystic Divide"
                  data-description="Female protagonist trying to prove the kingdom that not only men can fight."
                  data-genre="Sci-Fi, Action, Adventure, Medieval"
@@ -98,8 +102,9 @@
             </div>
 
             <div class="movie-card" id="movie-item-5"
+                 data-image= "images/Chronicles.png"
                  data-title="Chronicles"
-                 data-description="Kyle, a man from the future travels through space and time ending up in 2024 trying to save the planet from an invasive alive creature what keeps reproducing rapidly."
+                 data-description="Kyle, a man from the future travels through space and time ending up in 2024 trying to save the planet from an invasive alien creature what keeps reproducing rapidly."
                  data-genre="Action, Kids, Sci-Fi, Fantasy"
                  data-time=" 25 May 2022">
                 <img th:src="@{/images/Chronicles.png}" alt="Movie 5 Poster" class="movie-poster2">
@@ -107,6 +112,7 @@
             </div>
 
             <div class="movie-card" id="movie-item-6"
+                 data-image= "images/MissionRuby.png"
                  data-title="Mission Ruby"
                  data-description="A secret agent is being tasked with a top secret mission which turns out being more difficult than anticipated uncovering the truth about the agency he's working for and mythical creatures."
                  data-genre="Drama, Adventure, Sci-Fi"
@@ -149,6 +155,12 @@
 <div class="modal hidden" id="movie-modal">
     <div class="modal-content">
         <span id="close-movie-modal" class="close-btn">&times;</span>
+
+        <div class="modal-image-container">
+            <img id="movie-image" src="#" alt="Movie Poster" class="modal-movie-image">
+            <div class="image-blur-overlay"></div>
+        </div>
+
         <h3 id="movie-title">Movie Title</h3>
         <p id="movie-description">This is a short description of the movie...</p>
 

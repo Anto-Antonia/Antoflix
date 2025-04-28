@@ -6,6 +6,7 @@ import com.example.Antoflix.dto.response.user.RegisterResponse;
 import com.example.Antoflix.dto.response.user.SignInResponse;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
+import com.example.Antoflix.exceptions.auth.InvalidPasswordException;
 import com.example.Antoflix.exceptions.role.RoleNotFoundException;
 import com.example.Antoflix.exceptions.user.UserAlreadyTakenException;
 import com.example.Antoflix.mapper.UserRoleMapper;
@@ -43,8 +44,16 @@ public class AuthService {
         }
     }
 
+    public void validatePassword(String password){
+        if(password == null || password.length() < 6){
+            throw new InvalidPasswordException("The password must be at least 6 characters long.");
+        }
+    }
+
     public RegisterResponse registerUser(RegisterRequest registerRequest){
         checkEmailAvailable(registerRequest.getEmail());
+
+        validatePassword(registerRequest.getPassword());  // validating raw password before encoding it
 
         User user = new User();
         user.setUsername(registerRequest.getUsername());

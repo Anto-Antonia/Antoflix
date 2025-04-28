@@ -154,3 +154,7 @@ label{
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 18px;
 }
+
+.error-message{
+    color: red;
+}

@@ -1,5 +1,6 @@
 package com.example.Antoflix.exceptions;
 
+import com.example.Antoflix.exceptions.auth.InvalidPasswordException;
 import com.example.Antoflix.exceptions.error.ApiError;
 import com.example.Antoflix.exceptions.genre.AddGenreException;
 import com.example.Antoflix.exceptions.movie.AddMovieException;
@@ -109,6 +110,19 @@ public class GlobalExceptionalHandler {
         ApiError error = ApiError.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND)
+                .message(exception.getMessage())
+                .debugMessage(ExceptionUtils.getRootCauseMessage(exception))
+                .path(request.getRequestURI())
+                .build();
+
+        return buildResponseEntity(error);
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<Object> handleInvalidPasswordException(InvalidPasswordException exception, HttpServletRequest request){
+        ApiError error = ApiError.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_ACCEPTABLE)
                 .message(exception.getMessage())
                 .debugMessage(ExceptionUtils.getRootCauseMessage(exception))
                 .path(request.getRequestURI())
