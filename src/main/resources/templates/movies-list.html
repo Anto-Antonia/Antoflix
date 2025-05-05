@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Movies -Antoflix</title>
+    <title>Movies - Antoflix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel = "stylesheet" th:href="@{/css/movies-list-style.css}">
@@ -116,11 +116,44 @@
             <h1>Movies</h1>
 
             <div class="movie-grid">
-                <div th:each="movie : ${movies}" class="movie-item">
-                    <p th:text="${movie.title}"></p>
+                <div th:each="movie : ${movies}" class="movie-item" onclick="openModal(this)">
+                    <img th:src="@{/images/{title}.png(title=${#strings.toLowerCase(movie.title.replace(' ', '-'))})}"
+                        alt="Movie Image" class="movie-image">
+                    <p th:text="${movie.title}" class="movie-title"></p>
+
+                    <div class="movie-details"
+                        th:data-title="${movie.title}"
+                        th:data-description="${movie.description}"
+                        th:data-localDate="${movie.localDate}"
+                        th:data-genre="${movie.genres}"
+                            style="display: none;"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal" id="movie-modal">
+        <div class="modal-content">
+            <span id="close-movie-modal" class="close-btn" onclick="closeModal()">&times;</span>
+
+            <button class="play-button"><i class="fa-solid fa-play"></i> Play </button>
+            <div class="interaction">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+
+            <div class="modal-image-container">
+                <img id="movie-image" src="#" alt="Movie Poster" class="modal-movie-image">
+                <div class="image-blur-overlay"></div>
+            </div>
+
+            <h3 id="movie-title">Movie Title</h3>
+            <p id="movie-description">This is a short description of the movie...</p>
+
+            <p><strong>Genre:</strong> <span id="movie-genre" class="genre-tags-container">Action</span></p>
+
+            <p><strong>Release Date:</strong><span id="movie-time"> 5 May 1999</span></p>
+        </div>
+    </div>
+
 </body>
 </html>

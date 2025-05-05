@@ -164,3 +164,33 @@ window.addEventListener('scroll', () => {
     }
     lastScrollY = window.scrollY;
 });
+
+// script for movie cards
+function openModal(movieElement) {
+    const title = movieElement.querySelector(".movie-details").getAttribute("data-title");
+    const release = movieElement.querySelector(".movie-details").getAttribute("data-localDate");
+    const genre = movieElement.querySelector(".movie-details").getAttribute("data-genre");
+    const description = movieElement.querySelector(".movie-details").getAttribute("data-description");
+    const imageUrl = movieElement.querySelector(".movie-image").src;
+
+    // Set modal content dynamically
+    document.getElementById("movie-title").innerText = title;
+    document.getElementById("movie-time").innerText = release;
+    document.getElementById("movie-genre").innerText = genre;
+    document.getElementById("movie-description").innerText = description;
+    document.getElementById("movie-image").src = imageUrl;
+
+    // Show modal
+    document.getElementById("movie-modal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("movie-modal").style.display = "none";
+}
+
+// Close modal when clicking outside modal content
+movieModal.addEventListener('click', (e) => {
+  if (!modalContent.contains(e.target)) { // Check if the click is outside modal content
+    movieModal.classList.add('hidden');
+  }
+});
