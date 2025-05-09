@@ -38,8 +38,10 @@ public class AuthService {
 
     public void checkEmailAvailable(String email){
        // Optional<User> userOptional = userRepository.findUserByUsername(email);
-
-        if(userRepository.findUserByEmail(email).isPresent()){
+        if(!isValidEmail(email)){
+            throw new IllegalArgumentException("Invalid email format.");
+        }
+            if (userRepository.findUserByEmail(email).isPresent()) {
             throw new UserAlreadyTakenException("Email already in use");
         }
     }
@@ -48,6 +50,11 @@ public class AuthService {
         if(password == null || password.length() < 6){
             throw new InvalidPasswordException("The password must be at least 6 characters long.");
         }
+    }
+
+    public static boolean isValidEmail(String email){
+        String EMAIL_REGEX= "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.(com|net|org|edu|gov|co|info|eu|uk|ca|de|fr|it|us|cz|jp|ru|au)$";
+        return email.matches(EMAIL_REGEX);
     }
 
     public RegisterResponse registerUser(RegisterRequest registerRequest){

@@ -156,5 +156,10 @@ label{
 }
 
 .error-message{
-    color: red;
+       color: red;
+        background-color: #ee7474;
+        border: 1px solid #ff4d4f;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
 }

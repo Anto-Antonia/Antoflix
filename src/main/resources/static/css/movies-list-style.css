@@ -103,6 +103,7 @@ body{
 
 .movie-item:hover{
  transform: translateY(-5px);
+ cursor:pointer;
 }
 
 .header{
@@ -360,6 +361,12 @@ body{
     animation: modalFadeIn 0.3s ease-out; /* adding this line to the modal content for the fade in effect*/
 }
 
+#movie-description{
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
 .modal.show .modal-content {
     animation: modalFadeIn 0.3s ease-out;
   }
@@ -369,6 +376,7 @@ body{
     height: 300px;
     width: 100%;
     overflow: hidden;
+
   }
 
   .modal-movie-image{
@@ -423,13 +431,16 @@ body{
     z-index: 10;
     width: 150px;
     height: 50px;
+    transform: translateY(-10%);
+    top: 50%;
+    left: 10px;
+    font-size: 28px;
+
     align-items: center;
     display: flex;
     justify-content: center;
     cursor: pointer;
-    top: 50%;
-    left: 10px;
-    font-size: 28px;
+
     background-color: rgb(190, 181, 181);
     border-radius: 20px;
     border: 0;
