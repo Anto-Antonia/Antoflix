@@ -95,19 +95,17 @@ p{
 }
 
 .headline{
-    margin-top: 60px;
     padding-left: 100px;
     margin-left: 200px;
     font-size: 30px;
-    position: center;
     margin-top: 0;
     padding-top: 0;
+    left: 70px;
 }
+
 .content h3 {
     margin-bottom: 5px; /* Reduce space */
 }
-
-
 
 hr{
     border: none;
@@ -141,6 +139,14 @@ hr{
 .settings-content h2{
     margin-right: 200px;
     padding-bottom: 20px;
+}
+
+.settings-content p{
+    position: relative;
+    margin-left: 0px;
+    margin-right: auto;
+    padding-left: 300px;
+    bottom: 50px;
 }
 
 .settings-content form {

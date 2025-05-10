@@ -57,7 +57,15 @@ public class AuthService {
         return email.matches(EMAIL_REGEX);
     }
 
+    public void validateUsername(String username){
+        if(username == null || username.length() < 5){
+            throw new UserAlreadyTakenException("The username must be at least 5 characters long.");
+        }
+    }
+
     public RegisterResponse registerUser(RegisterRequest registerRequest){
+        validateUsername(registerRequest.getUsername());
+
         checkEmailAvailable(registerRequest.getEmail());
 
         validatePassword(registerRequest.getPassword());  // validating raw password before encoding it
