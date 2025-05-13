@@ -93,42 +93,59 @@ function showContent(setting) {
     // Update the right-side content
     settingsContent.innerHTML = content[setting] || "<h2>Option not found</h2>";
 
-    if(setting === "getUserById"){
+    if (setting === "getUserById") {
+        setupGetUserById();
+       }
+}
+    function setupGetUserById(){
         const userIdInput = document.getElementById("userId");
+        const searchBtn = document.getElementById("searchUserBtn");
         const errorMessage = document.getElementById("error-message");
-        const searchButton = document.getElementById("searchUserBtn");
         const searchResult = document.getElementById("result-container");
 
-        userIdInput.addEventListener("input", function () {
-            if (!/^\d*$/.test(this.value)) { // Allow only numbers
+        userIdInput.addEventListener("input", function() {
+            if(!/^\d*$/.test(this.value)){
                 errorMessage.textContent = "Only numbers are allowed!";
                 this.style.borderColor = "red";
-            } else {
+            } else{
                 errorMessage.textContent = "";
                 this.style.borderColor = "";
             }
-    });
+        });
 
-    searchButton.addEventListener("click", function () {
-        const userId = userIdInput.value.trim();
-        if (userId === "" || isNaN(userId)) {
-            errorMessage.textContent = "Please enter a valid numeric ID!";
-            userIdInput.style.borderColor = "red";
-            return;
-        }
+        searchBtn.addEventListener("click", function () {
+            const userId = userIdInput.value.trim();
+                if (userId === "" || isNaN(userId)) {
+                    errorMessage.textContent = "Please enter a valid numeric ID!";
+                    userIdInput.style.borderColor = "red";
+                    return;
+                }
 
-        errorMessage.textContent = ""; // Clear any error messages
+                 errorMessage.textContent = ""; // Clear any error messages
+                 fetch(`/api/v1/users/${userId}`)
+                    .then(response=> {
+                        if(!response.ok) throw new Error("User not found");
+                        return response.json();
+                    })
+                    .then(data => {
+                        searchResult.innerHTML = `
+                            <div class="result-box">
+                                <p><strong>User ID:</strong> ${userId}</p>
+                                <p><strong>Username:</strong> ${data.username}</p>
+                                <p><strong>Email:</strong> ${data.email}</p>
+                                <p><strong>Role:</strong> ${data.roleName}</p>
+                            </div>
+                            `;
+                    })
+                    .catch(error => {
+                        searchResult.innerHTML = `<p style="color: red;">${error.message}</p>`;
+                    })
+        });
 
-        // Simulate fetching data (replace with actual API call)
-        setTimeout(() => {
-            searchResult.innerHTML = `
-                <div class="result-box">
-                    <p><strong>User ID:</strong> ${userId}</p>
-                    <p><strong>Name:</strong> John Doe</p>
-                    <p><strong>Email:</strong> johndoe@example.com</p>
-                </div>
-            `;
-        }, 500);
-    });
     }
-}
+
+
+
+
+
+
