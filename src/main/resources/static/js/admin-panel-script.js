@@ -12,7 +12,7 @@ function showContent(setting) {
     const content = {
         addUser: `
             <h2>Add User</h2>
-            <form>
+            <form id="addUserForm">
                 <label for="username">Username:</label>
                 <input type="text" id="username" placeholder="Enter username"><br>
 
@@ -24,6 +24,7 @@ function showContent(setting) {
 
                 <button type="submit">Submit</button>
             </form>
+            <div id="addUserMessage"></div>
         `,
         getUserById: `
             <h2>Get User By ID</h2>
@@ -93,10 +94,68 @@ function showContent(setting) {
     // Update the right-side content
     settingsContent.innerHTML = content[setting] || "<h2>Option not found</h2>";
 
+    if(setting === "addUser"){
+        setupAddUser();
+    }
+
     if (setting === "getUserById") {
         setupGetUserById();
-       }
+    }
 }
+    function setupAddUser(){
+        const messageDiv = document.getElementById("addUserMessage");
+        const form = document.getElementById("addUserForm")
+        const userName = document.getElementById("username");
+        const userEmail = document.getElementById("email");
+        const userPassword = document.getElementById("password");
+
+        form.addEventListener("submit", function (event){
+            event.preventDefault(); // prevents the page to reload
+
+            const username = userName.value.trim();
+            const email = userEmail.value.trim();
+            const password = userPassword.value.trim();
+
+            if(!username || !email || !password){
+                messageDiv.innerHTML = `<p style="color: red;"> All fields are required!</p>`;
+                return;
+            }
+
+            const payload = {
+                username: username,
+                email: email,
+                password: password
+            };
+
+            fetch("/api/v1/users/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(err => {
+                        throw new Error(err.message || "Failed to add user.");
+                    });
+                }
+                return response.json();
+            })
+            .then(data =>{
+                messageDiv.innerHTML = `<p style="color: green;">User added successfully!</p>`;
+                form.reset();  // clearing the inputs
+            })
+            .catch(error => {
+                let errorText = error .message.includes("email") ?
+                    "This email is already in use." : error.message;
+                messageDiv.innerHTML = `<p style = "color: red;"> ${errorText}</p>`;
+            });
+        });
+
+    }
+
     function setupGetUserById(){
         const userIdInput = document.getElementById("userId");
         const searchBtn = document.getElementById("searchUserBtn");
@@ -130,8 +189,8 @@ function showContent(setting) {
                     .then(data => {
                         searchResult.innerHTML = `
                             <div class="result-box">
-                                <p><strong>User ID:</strong> ${userId}</p>
-                                <p><strong>Username:</strong> ${data.username}</p>
+                                <p><strong>User ID:</strong> ${userId}</p>              // added just the userId so I can return the ID I entered
+                                <p><strong>Username:</strong> ${data.username}</p>      //in the search tab because the user ID does NOT exist in the UserResponse
                                 <p><strong>Email:</strong> ${data.email}</p>
                                 <p><strong>Role:</strong> ${data.roleName}</p>
                             </div>
