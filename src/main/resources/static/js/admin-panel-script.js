@@ -189,8 +189,8 @@ function showContent(setting) {
                     .then(data => {
                         searchResult.innerHTML = `
                             <div class="result-box">
-                                <p><strong>User ID:</strong> ${userId}</p>              // added just the userId so I can return the ID I entered
-                                <p><strong>Username:</strong> ${data.username}</p>      //in the search tab because the user ID does NOT exist in the UserResponse
+                                <p><strong>User ID:</strong> ${userId}</p>
+                                <p><strong>Username:</strong> ${data.username}</p>
                                 <p><strong>Email:</strong> ${data.email}</p>
                                 <p><strong>Role:</strong> ${data.roleName}</p>
                             </div>
@@ -202,8 +202,8 @@ function showContent(setting) {
         });
 
     }
-
-
+// added just the userId so I can return the ID I entered
+//in the search tab because the user ID does NOT exist in the UserResponse
 
 
 
