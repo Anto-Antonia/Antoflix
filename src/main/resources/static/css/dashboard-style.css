@@ -23,9 +23,266 @@ body{
     position: absolute;
 }
 
+.content{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 movies per row */
+    gap: 40px;
+    padding: 20px;
+    padding-right: 2rem;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.movie-item {
+    box-sizing: border-box;
+    width: 300px;
+    height: 350px;
+    background-color: #503030;
+    border-radius: 20px;
+    transition: transform 0.3s ease-in-out, z-index 0.3s;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.movie-item:hover{
+    transform: scale(1.05);
+    z-index: 2;
+ }
+
+ .movie-item img.movie-poster3{
+  width: 305px;
+  height: 350px;
+  object-fit: cover;
+  object-position: center 89%;
+  border-radius: 20px;
+  display: block;
+}
+
+ .movie-item img.movie-poster2{
+    width: 300px;
+    height: 380px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 20px;
+    display: block;
+}
+
+.movie-item img.movie-poster{
+  width: 308px;
+  height: 350px;
+  object-fit: cover;
+  object-position: center 86%;
+  border-radius: 20px;
+  display: block;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(18, 18, 18, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    backdrop-filter: blur(5px);
+  }
+
+  .modal.hidden {
+    display: none;
+  }
+
+  .modal-content {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+    max-width: 600px;
+    width: 90%;
+    background:  #1f1f1f;
+    color: #e7d9d9;
+    border-radius: 12px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    position: relative;
+    animation: modalFadeIn 0.3s ease-out; /* adding this line to the modal content for the fade in effect*/
+}
+
+.modal.show .modal-content {
+    animation: modalFadeIn 0.3s ease-out;
+  }
+
+  .modal-image-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    overflow: hidden;
+    transform: translateY(-2%);
+  }
+
+  .modal-movie-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+  }
+
+  .movie-title-overlay {
+    position: absolute;
+    top: 17rem;
+    left: 0;
+    right: 0;
+    padding: 6px 10px;
+
+    color: #d8caca;
+    font-weight: 500;
+    font-size: 35px;
+    font-family: 'cursive';
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /*for readability*/
+
+    text-align: center;
+    z-index: 1;
+}
+
+  .image-blur-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, rgba(131, 117, 117, 0.8), #413d3d);
+    pointer-events: none;
+  }
+
+  .modal-content h3,
+  .modal-content p {
+    padding: 0 1.5rem;
+}
+
+close-btn {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    padding-bottom: 5px;
+    width: 40px;
+    height: 35px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #000000;
+    z-index: 10 !important; /* Ensure it's above the image */
+    border-radius: 50%; /* Optional: make it circular */
+    background-color: rgba(0, 0, 0, 0.2); /* Optional: soft background */
+
+     all: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  }
+
+  #close-movie-modal {
+      display: block !important; /* Ensure it exists */
+          position: absolute;
+          top: 10px;
+          right: 15px;
+          font-size: 24px;
+          cursor: pointer;
+          background: none;
+          border: none;
+          color: white;
+          font-weight: bold;
+          z-index: 9999 !important;
+  }
+
+  .close-btn:hover{
+    background-color: #c9bfbf;
+  }
+
+.play-button{
+    position: absolute;
+  z-index: 10;
+  top: 50%;         /* center vertically */
+  left: 20px;        /* adjust horizontally */
+  transform: translateY(-50%);  /* truly center vertically */
+  width: 150px;
+  height: 50px;
+  font-size: 28px;
+  background-color: rgb(190, 181, 181);
+  border-radius: 20px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  }
+
 .fade-in {
     animation: fadeIn 0.6s ease-in;
 }
+.play-button:hover{
+    background-color: #444;
+  }
+
+  .interaction i{
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 10;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    top: 50%;
+    left: 11rem;
+    font-size: 25px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+
+  i:hover{
+    background-color: #444;
+  }
+
+  .genre-tags-container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-left: 6px;
+  }
+
+  .genre-tag {
+    background-color: #444;
+    color: rgb(204, 187, 187);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  #series-modal .play-button {
+    top: 45%; /* Slightly higher */
+  }
+
+  #series-modal .interaction i {
+    top: 45%; /* Match with play button */
+  }
 
 @keyframes fadeIn {
     from {
@@ -174,8 +431,14 @@ body{
     font-size: 23px;
      transition: transform 0.3s ease;
 }
+
 .search-bar i:hover{
     color: crimson;
+}
+
+.search-bar i, .profile-icon i {
+    background: transparent;
+    box-shadow: none;
 }
 
 .search-input{
@@ -203,14 +466,14 @@ body{
 .profile {
     position: relative;
     display: inline-block;
-    margin-left: 305px;
+    margin-left: 280px;
 }
 
 .profile-icon{
     color: white;
     top: 23px;
 
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;
@@ -276,6 +539,9 @@ body{
 
 .dropdown{
     position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .dropdown-menu{
@@ -316,3 +582,25 @@ body{
     font-size: 15px;
 }
 
+@keyframes modalFadeIn {  /*for fade in effect*/
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  #movie-description {
+    max-height: 150px;      /* limit height */
+    overflow-y: auto;       /* scroll if needed */
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-intro{
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #9c8a8a;
+  }
