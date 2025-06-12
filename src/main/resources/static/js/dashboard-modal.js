@@ -100,3 +100,10 @@ closeMovieModal.addEventListener('click', () => {
 closeSeriesModal.addEventListener('click', () => {
   seriesModal.classList.add('hidden');
 });
+
+// Close modal when clicking outside modal content
+movieModal.addEventListener('click', (e) => {
+  if (!modalContent.contains(e.target)) { // Check if the click is outside modal content
+    movieModal.classList.add('hidden');
+  }
+});

@@ -209,14 +209,14 @@ body{
 .profile {
     position: relative;
     display: inline-block;
-    margin-left: 305px;
+    margin-left: 280px;
 }
 
 .profile-icon{
     color: white;
     top: 23px;
 
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;
@@ -247,10 +247,12 @@ body{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }
+
 .profile-dropdown form{
     margin: 0;
     padding: 0;
 }
+
 .profile-dropdown a{
     display: block;
     color: white;
@@ -259,6 +261,7 @@ body{
     text-align: center;
    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
 .profile-dropdown button{
      background: none;
        border: none;

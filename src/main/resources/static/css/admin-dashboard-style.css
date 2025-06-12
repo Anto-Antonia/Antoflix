@@ -206,14 +206,14 @@ body.modal-open {
 .profile {
     position: relative;
     display: inline-block;
-    margin-left: 305px;
+    margin-left: 280px;
 }
 
 .profile-icon{
     color: white;
     top: 23px;
 
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;

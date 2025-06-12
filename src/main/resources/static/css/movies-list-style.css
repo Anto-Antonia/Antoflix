@@ -186,9 +186,16 @@ body{
 .search-bar i{
     font-size: 23px;
      transition: transform 0.3s ease;
+
 }
 .search-bar i:hover{
     color: crimson;
+}
+
+.search-bar i, .profile-icon i {
+  background: transparent;
+  box-shadow: none;
+  flex-direction: column;
 }
 
 .search-input{
@@ -211,19 +218,21 @@ body{
     display: block;
     opacity: 1; /* Make it visible */
     transform: scaleX(1);
+    flex-direction: column;
 }
 
 .profile {
-    position: relative;
-    display: inline-block;
-    margin-left: 305px;
+        position: relative;
+        display: inline-block;
+        margin-left: 280px;
+        flex-direction: column;
 }
 
 .profile-icon{
     color: white;
     top: 23px;
 
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     padding: 10px;
     border-radius: 50%;
@@ -232,11 +241,13 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 
     width: 30px;
     height: 30px;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
 }
+
 .profile-icon i:hover{
     color: crimson;
 }
