@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Movies - Antoflix</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
     <!-- Manifest file -->
     <link rel="manifest" th:href = "@{images/site.webmanifest}">
 
-    <script th:src = "@{/js/dashboard-script.js}" defer></script>
+    <script th:src = "@{/js/movie-modal-script.js}" defer></script>
 </head>
 <body>
     <header class = "header" id="header">
@@ -116,7 +117,7 @@
             <h1>Movies</h1>
 
             <div class="movie-grid">
-                <div th:each="movie : ${movies}" class="movie-item" onclick="openModal(this)">
+                <div th:each="movie : ${movies}" class="movie-item" onclick="openModal(this)"> <!--removed onclick="openModal(this)"-->
                     <img th:src="@{/images/{title}.png(title=${#strings.toLowerCase(movie.title.replace(' ', '-'))})}"
                         alt="Movie Image" class="movie-image">
                     <p th:text="${movie.title}" class="movie-title"></p>
@@ -132,9 +133,9 @@
         </div>
     </div>
 
-    <div class="modal" id="movie-modal">
+    <div class="modal hidden" id="movie-modal">
         <div class="modal-content">
-            <span id="close-movie-modal" class="close-btn" onclick="closeModal()">&times;</span>
+            <span id="close-movie-modal" class="close-btn">&times;</span>
 
             <button class="play-button"><i class="fa-solid fa-play"></i> Play </button>
             <div class="interaction">

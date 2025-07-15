@@ -171,7 +171,7 @@ body{
     padding: 0 1.5rem;
 }
 
-close-btn {
+.close-btn {
     position: absolute;
     right: 1rem;
     top: 1rem;
@@ -186,14 +186,18 @@ close-btn {
     cursor: pointer;
     color: #000000;
     z-index: 10 !important; /* Ensure it's above the image */
-    border-radius: 50%; /* Optional: make it circular */
-    background-color: rgba(0, 0, 0, 0.2); /* Optional: soft background */
+    border-radius: 50%; /*  make it circular */
+    background-color: rgba(0, 0, 0, 0.2); /* soft background */
 
      all: unset;
         display: flex;
         align-items: center;
         justify-content: center;
   }
+
+  .close-btn:hover{
+      background-color: #c9bfbf;
+    }
 
   #close-movie-modal {
       display: block !important; /* Ensure it exists */
@@ -207,10 +211,6 @@ close-btn {
           color: white;
           font-weight: bold;
           z-index: 9999 !important;
-  }
-
-  .close-btn:hover{
-    background-color: #c9bfbf;
   }
 
 .play-button{
@@ -598,3 +598,7 @@ close-btn {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #9c8a8a;
   }
+
+ .hidden{
+    display: none !important;
+ }
