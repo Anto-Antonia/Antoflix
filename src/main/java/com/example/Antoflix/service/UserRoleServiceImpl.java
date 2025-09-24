@@ -87,11 +87,7 @@ public class UserRoleServiceImpl implements UserRoleService{
             throw new UserAlreadyTakenException("Email or username is already in use: " + addUserRequest.getEmail());
         }
 
-       // User user = userRoleMapper.fromAddUserRequest(addUserRequest);
-        User user = new User();
-        user.setUsername(addUserRequest.getUsername());
-        user.setEmail(addUserRequest.getEmail());
-        user.setPassword(addUserRequest.getPassword());
+        User user = userRoleMapper.fromAddUserRequest(addUserRequest);
 
         Role role = roleRepository.findRoleByRoleName("user")
                 .orElseThrow(()-> new RoleNotFoundException("Role 'user' not found in the DB"));
@@ -105,12 +101,6 @@ public class UserRoleServiceImpl implements UserRoleService{
                 user.getEmail(),
                 user.getRoles().stream().map(Role:: getRoleName).collect(Collectors.toList())
         );
-
-//        String userRole = addUserRequest.getRoleName();
-//        List<Role> roles = roleRepository.findAll().stream().filter(element -> userRole.contains(element.getRoleName()))
-//                .collect(Collectors.toList());
-//        user.setRoles(roles);
-//        return userRepository.save(user);
     }
 
     @Override
