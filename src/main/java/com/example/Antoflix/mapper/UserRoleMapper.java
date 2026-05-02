@@ -46,7 +46,7 @@ public class UserRoleMapper {                                                   
         userResponse.setUsername(user.getUsername());
         userResponse.setEmail(user.getEmail());
 
-        if (!user.getRoles().isEmpty()) {
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) { // added user.getRoles() != null &&
             List<Role> roles = user.getRoles();
             List<String> roleNames = roles.stream().map(r -> r.getRoleName()).toList();
             userResponse.setRoleName(roleNames);

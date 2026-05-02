@@ -10,7 +10,6 @@ import com.example.Antoflix.dto.response.watchlist.WatchlistResponse;
 import com.example.Antoflix.entity.Movie;
 import com.example.Antoflix.entity.Role;
 import com.example.Antoflix.entity.User;
-import com.example.Antoflix.entity.Watchlist;
 import com.example.Antoflix.exceptions.role.RoleNotFoundException;
 import com.example.Antoflix.exceptions.user.UserNotFoundException;
 import com.example.Antoflix.mapper.MovieGenreMapper;
@@ -18,7 +17,6 @@ import com.example.Antoflix.mapper.UserRoleMapper;
 import com.example.Antoflix.repository.MovieRepository;
 import com.example.Antoflix.repository.RoleRepository;
 import com.example.Antoflix.repository.UserRepository;
-import com.example.Antoflix.repository.WatchlistRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,8 +42,6 @@ public class UserRoleServiceTest {
     @Mock
     private MovieRepository movieRepository;
     @Mock
-    private WatchlistRepository watchlistRepository;
-    @Mock
     private UserRoleMapper userRoleMapper;
     @Mock
     private MovieGenreMapper movieGenreMapper;
@@ -54,15 +50,14 @@ public class UserRoleServiceTest {
     private User user;
     private Role role;
     private Movie movie;
-    private Watchlist watchlist;
 
-    private WatchlistResponse watchlistResponse;
     private MovieResponse movieResponse;
     private UserResponse userResponse;
     private RoleResponse roleResponse;
 
     @BeforeEach
     void setup(){
+
         role = new Role();
         role.setId(1);
         role.setRoleName("user");
@@ -77,7 +72,7 @@ public class UserRoleServiceTest {
         user.setUsername("username");
         user.setEmail("email");
         user.setPassword("password");
-        user.setRoles(new ArrayList<>(Arrays.asList(role)));
+        user.setRoles(new ArrayList<>());
         user.setFavoriteMovie(new ArrayList<>(Arrays.asList(movie)));
         user.setWatchlists(new ArrayList<>());
 
@@ -123,7 +118,6 @@ public class UserRoleServiceTest {
 
         when(userRepository.findUserByEmail(request.getEmail())).thenReturn(Optional.empty());
         when(userRoleMapper.fromAddUserRequest(request)).thenReturn(user);
-
         when(roleRepository.findRoleByRoleName("user")).thenReturn(Optional.of(role));
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -132,7 +126,7 @@ public class UserRoleServiceTest {
         assertNotNull(result);
         assertEquals("username", result.getUsername());
         assertEquals("email", result.getEmail());
-        //assertEquals("user"), result.getRoleName());
+        assertEquals(List.of("user"), result.getRoleName());
 
         verify(userRepository).save(any(User.class));
     }
@@ -169,14 +163,18 @@ public class UserRoleServiceTest {
 
     @Test
     public void getRoleById_whenRoleDoesExist_throwRoleNotFoundException(){
-        int roleId = 1;
+        Integer roleId = 1;
 
         when(roleRepository.findById(roleId)).thenReturn(Optional.of(role));
         when(userRoleMapper.fromRoleResponse(role)).thenReturn(roleResponse);
 
         RoleResponse  response = userRoleService.getRole(roleId);
 
+        assertNotNull(response);
+        assertEquals(roleResponse.getName(), response.getName());
+
         verify(roleRepository, times(1)).findById(roleId);
+        verify(userRoleMapper, times(1)).fromRoleResponse(role);
     }
 
     @Test
@@ -192,14 +190,26 @@ public class UserRoleServiceTest {
 
     @Test
     public void getUserById_whenUserExists_returnUser(){
-        int userId = 1;
+        Integer userId = 1;
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(userRoleMapper.fromUserResponse(user)).thenReturn(userResponse);
+
+        UserResponse mappedResponse = new UserResponse("username", "email", List.of("user"));
+
+        when(userRoleMapper.fromUserResponse(user)).thenReturn(mappedResponse);
 
         UserResponse response = userRoleService.getUserById(userId);
 
+        assertNotNull(response);
+        assertEquals("username", response.getUsername());
+        assertEquals("email", response.getEmail());
+
+        assertNotNull(response.getRoleName());
+        assertEquals(1, response.getRoleName().size());
+        assertEquals("user", response.getRoleName().get(0));
+
         verify(userRepository, times(1)).findById(userId);
+        verify(userRoleMapper, times(1)).fromUserResponse(user);
     }
 
     @Test
