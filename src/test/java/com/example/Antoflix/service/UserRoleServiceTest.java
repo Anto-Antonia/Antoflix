@@ -85,8 +85,8 @@ public class UserRoleServiceTest {
         userResponse.setUsername("username");
         userResponse.setEmail("email");
 
-//        roleResponse = new RoleResponse();
-//        roleResponse.setName("user");
+        roleResponse = new RoleResponse();
+        roleResponse.setName("user");
 
         movieResponse = new MovieResponse();
         movieResponse.setTitle("Sample movie");
